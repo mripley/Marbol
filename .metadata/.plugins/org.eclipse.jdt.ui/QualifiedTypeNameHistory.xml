@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="twitter4j.Tweet"/>
+<fullyQualifiedTypeName name="org.apache.lucene.index.TermEnum"/>
+<fullyQualifiedTypeName name="org.apache.lucene.index.IndexReader"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.apache.lucene.store.FSDirectory"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="mosaicmaker.DirectoryFetcher"/>
+<fullyQualifiedTypeName name="org.imgscalr.Scalr"/>
+<fullyQualifiedTypeName name="mosaicmaker.MosaicMakerException"/>
+<fullyQualifiedTypeName name="mosaicmaker.GoogleImageFetcher"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.client.BingSearchClient"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.client.BingSearchClient.SearchRequestBuilder"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.SourceType"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.AdultOption"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.SearchOption"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.web.WebSearchOption"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.SearchResponse"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.schema.web.WebResult"/>
+<fullyQualifiedTypeName name="mosaicmaker.BingImageFetcher"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ExecutorService"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Callable"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Future"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.google.code.bing.search.client.BingSearchServiceClientFactory"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.FileReader"/>
+</qualifiedTypeNameHistroy>

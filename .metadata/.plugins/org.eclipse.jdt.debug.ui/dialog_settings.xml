@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.jdt.internal.debug.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+		<item value="200" key="SashWeightDetails"/>
+		<item value="200" key="SashWeightTree"/>
+		<item value="156" key="HEIGHT"/>
+		<item value="600" key="WIDTH"/>
+	</section>
+	<section name="conditionHistory">
+		<item value="2" key="conditionHistoryEntryCount"/>
+		<item value="b.getAverageColor() == new Color(155,112,120)" key="conditionHistoryEntry_0"/>
+		<item value="(b.getAverageColor() == new Color(155,112,120));" key="conditionHistoryEntry_1"/>
+	</section>
+</section>
