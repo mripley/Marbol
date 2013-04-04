@@ -150,7 +150,7 @@ public class MarbolMain extends FragmentActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.status_section).toUpperCase(l);
+				return getString(R.string.stats_section).toUpperCase(l);
 			case 1:
 				return getString(R.string.map_section).toUpperCase(l);
 			}

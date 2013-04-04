@@ -3,7 +3,7 @@
 
     <string name="app_name">Marbol</string>
     <string name="action_settings">Settings</string>
-    <string name="status_section">Stats</string>
+    <string name="stats_section">Stats</string>
     <string name="map_section">Map</string>
 
 </resources>
