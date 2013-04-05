@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:label="Settings" android:multiprocess="true" android:screenOrientation="unspecified" android:name="SettingsActivity" android:theme="@style/AppTheme" android:launchMode="standard"></activity>
     </application>
 
 </manifest>

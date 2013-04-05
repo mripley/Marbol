@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 
 public class MarbolMain extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -48,8 +50,7 @@ public class MarbolMain extends FragmentActivity implements
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -67,6 +68,7 @@ public class MarbolMain extends FragmentActivity implements
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+			
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
@@ -85,8 +87,21 @@ public class MarbolMain extends FragmentActivity implements
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+		case R.id.action_settings:
+			// launch the settings activity
+			Intent settingsIntent = new Intent(this, SettingsActivity.class);
+			startActivity(settingsIntent);
+			return true;
+		
+		}
+		return false;
+	}
+	
+	@Override
+	public void onTabSelected(ActionBar.Tab tab, 
+							  FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
@@ -94,12 +109,12 @@ public class MarbolMain extends FragmentActivity implements
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+								FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+								FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -108,6 +123,9 @@ public class MarbolMain extends FragmentActivity implements
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+		// number of unique tabs we have. Update this number if we add more!
+		private static final int numPages = 2;
+		
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -118,31 +136,29 @@ public class MarbolMain extends FragmentActivity implements
 			Fragment fragment;
 			
 			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
+			// Return a a fragment of the correct type as well as the Bundle necessary
+			// to launch that fragment
 			switch(position){
 				case 0:
-					fragment = new DummySectionFragment();
+					fragment = new StatsFragment();
 					break;
 				case 1:
-					fragment = new DummySectionFragment();
+					fragment = new MapFragment();
 				 	break;
 				default:
-					fragment = new DummySectionFragment();
+					fragment = new Fragment();
 					break;
 			}
 			
-			//Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(StatsFragment.ARG_SECTION_NUMBER, position + 1); // UI placeholder
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
-			return 2;
+			return numPages;
 		}
 
 		@Override
@@ -155,33 +171,6 @@ public class MarbolMain extends FragmentActivity implements
 				return getString(R.string.map_section).toUpperCase(l);
 			}
 			return null;
-		}
-	}
-
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(
-					R.layout.fragment_marbol_main_dummy, container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
 		}
 	}
 
