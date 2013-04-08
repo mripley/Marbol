@@ -8,10 +8,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MarbolMain$stats_fragment_layout" >
+    
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/new_adventure_button" >
+        
+    </ListView>
 
-    <TextView
-        android:id="@+id/section_label"
+    <Button
+        android:id="@+id/new_adventure_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/android:list"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/android:list"
+        android:text="@string/new_adventure_text" />
 
 </RelativeLayout>

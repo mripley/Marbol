@@ -5,5 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="stats_section">Stats</string>
     <string name="map_section">Map</string>
+    <string name="new_adventure_text">New Adventure</string>
 
 </resources>

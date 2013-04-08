@@ -151,7 +151,6 @@ public class MarbolMain extends FragmentActivity implements
 			}
 			
 			Bundle args = new Bundle();
-			args.putInt(StatsFragment.ARG_SECTION_NUMBER, position + 1); // UI placeholder
 			fragment.setArguments(args);
 			return fragment;
 		}
