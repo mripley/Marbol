@@ -4,45 +4,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="1" >
-
-        <TextView
-            android:id="@+id/total_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left|bottom"
-            android:layout_row="2"
-            android:text="total_distance" />
-
-        <TextView
-            android:id="@+id/total_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left|bottom"
-            android:layout_row="2"
-            android:text="total_distance" />
+        android:layout_height="32dp"
+        android:layout_weight="0.00" >
 
         <TextView
             android:id="@+id/adventure_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left|top"
-            android:layout_row="0"
-            android:text="AdventureName" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Adventure_Name" />
 
         <TextView
-            android:id="@+id/total_area"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_row="2"
-            android:text="total_area" />
+            android:id="@+id/adventure_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Date" />
 
-    </GridLayout>
+        <TextView
+            android:id="@+id/distance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/distance_label" />
+
+        <TextView
+            android:id="@+id/adventure_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/distance_label"
+            android:text="-1" />
+
+        <TextView
+            android:id="@+id/adventure_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="-1" />
+
+        <TextView
+            android:id="@+id/area_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/adventure_area"
+            android:text="@string/area_label_string" />
+
+    </RelativeLayout>
 
 </LinearLayout>

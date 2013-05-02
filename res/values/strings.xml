@@ -6,5 +6,7 @@
     <string name="stats_section">Stats</string>
     <string name="map_section">Map</string>
     <string name="new_adventure_text">New Adventure</string>
+    <string name="distance_label">Distance:</string>
+    <string name="area_label_string">Total Area:</string>
 
 </resources>
