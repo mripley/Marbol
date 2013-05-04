@@ -1,5 +1,6 @@
 package com.marbol.marbol;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class NewAdventureFragment extends Fragment implements View.OnClickListen
 		switch(v.getId()){
 		case R.id.NewAdventureButtonMain:
 			Log.i("UI", "Marin New Adventure Button Pressed!");
+			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
+			this.startActivity(launcher);
 		}
 	}
 }

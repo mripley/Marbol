@@ -9,9 +9,6 @@
     <string name="distance_label">Distance:</string>
     <string name="area_label_string">Total Area:</string>
     <string name="history_section">History</string>
-    <string name="title_activity_adventure">AdventureActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="adventure_activity_title">Adventure</string>
 
 </resources>

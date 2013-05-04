@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name="com.marbol.marbol.AdventureActivity"
-            android:label="@string/title_activity_adventure" >
+            android:label="@string/adventure_activity_title" >
         </activity>
     </application>
 
