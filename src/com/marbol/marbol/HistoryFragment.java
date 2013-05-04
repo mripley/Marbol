@@ -19,19 +19,19 @@ import android.database.Cursor;
 /**
  * Contains the logic to run the Stats fragment
  */
-public class StatsFragment extends ListFragment implements OnClickListener{
+public class HistoryFragment extends ListFragment implements OnClickListener{
 
 	private SimpleCursorAdapter dbAdapter;
 	private AdventureDataSource dSource;
 	private Cursor dbCursor;
-	public StatsFragment() {
+	public HistoryFragment() {
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.stats_fragment_layout, container, false);
+		View rootView = inflater.inflate(R.layout.history_fragment_layout, container, false);
 		
 		Button newAdvButton = (Button)rootView.findViewById(R.id.new_adventure_button);
 		newAdvButton.setOnClickListener(this);

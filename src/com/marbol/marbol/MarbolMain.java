@@ -140,10 +140,10 @@ public class MarbolMain extends FragmentActivity implements
 			// to launch that fragment
 			switch(position){
 				case 0:
-					fragment = new StatsFragment();
+					fragment = new NewAdventureFragment();
 					break;
 				case 1:
-					fragment = new MapFragment();
+					fragment = new HistoryFragment();
 				 	break;
 				default:
 					fragment = new Fragment();
@@ -165,9 +165,9 @@ public class MarbolMain extends FragmentActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.stats_section).toUpperCase(l);
+				return getString(R.string.new_adventure_text).toUpperCase(l);		
 			case 1:
-				return getString(R.string.map_section).toUpperCase(l);
+				return getString(R.string.history_section).toUpperCase(l);
 			}
 			return null;
 		}

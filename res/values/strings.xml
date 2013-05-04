@@ -8,5 +8,6 @@
     <string name="new_adventure_text">New Adventure</string>
     <string name="distance_label">Distance:</string>
     <string name="area_label_string">Total Area:</string>
+    <string name="history_section">History</string>
 
 </resources>
