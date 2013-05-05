@@ -2,15 +2,14 @@ package com.marbol.marbol;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 public class AdventureDataSource {
@@ -40,9 +39,8 @@ public class AdventureDataSource {
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
 		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getAdvDistance());
 		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
-		
 		// convert our Date to an appropriate string
-		SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
 		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
 		long rowID = db.insert(MarbolSQLHelper.TABLE_ADVENTURE, null, values);
 		adv.setAdvID(rowID);
@@ -61,21 +59,13 @@ public class AdventureDataSource {
 		db.delete(MarbolSQLHelper.TABLE_ADVENTURE, MarbolSQLHelper.COLUMN_ID + " = " + id, null);
 	}
 	
-	public Cursor getAdventures(){
-		//List<Adventure> advList = new ArrayList<Adventure>();
-		
+	public Cursor getAdventures(){	
 		Cursor cursor = db.query(MarbolSQLHelper.TABLE_ADVENTURE, allColumns, null, null, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
 		}
 		return cursor;
-//		while(!cursor.isAfterLast()){
-//			Adventure adv = (cursorToAdventure(cursor));
-//			advList.add(adv);
-//			cursor.moveToNext();
-//		}
-//		return advList;
 	}
 	
 	private Adventure cursorToAdventure(Cursor c){

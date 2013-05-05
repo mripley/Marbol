@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Fragment containing the logic to handle the "Map" Fragment
@@ -32,7 +31,7 @@ public class NewAdventureFragment extends Fragment implements View.OnClickListen
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.NewAdventureButtonMain:
-			Log.i("UI", "Marin New Adventure Button Pressed!");
+			Log.i("UI", "Main New Adventure Button Pressed!");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
 			this.startActivity(launcher);
 		}
