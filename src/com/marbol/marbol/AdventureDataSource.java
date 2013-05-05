@@ -9,7 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class AdventureDataSource {
@@ -39,6 +38,7 @@ public class AdventureDataSource {
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
 		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getAdvDistance());
 		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
+		
 		// convert our Date to an appropriate string
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
 		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
