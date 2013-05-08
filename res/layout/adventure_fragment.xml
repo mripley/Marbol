@@ -34,11 +34,33 @@
     </EditText>
 
     <Button
-        android:id="@+id/StartAdventureButton"
+        android:id="@+id/start_adventure_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="Start Adventure" />
+
+    <Chronometer
+        android:id="@+id/timer_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/section_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:text="Time"
+        android:textSize="48dp"/>
+
+    <Button
+        android:id="@+id/stop_adventure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/start_adventure_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:clickable="false"
+        android:longClickable="true"
+        android:text="Stop Adventure"
+        android:visibility="invisible" />
 
 </RelativeLayout>
