@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/new_adventure_text" 
-        android:onClick="onClick"/>
+        android:drawableTop="@drawable/NewAdventureButtonTest"
+        android:onClick="onClick"
+        android:text="@string/new_adventure_text" />
 
 </RelativeLayout>
