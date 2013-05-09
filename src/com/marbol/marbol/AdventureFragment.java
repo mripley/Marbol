@@ -20,7 +20,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	private View rootView;
 	private Boolean running;
 	private long lastPause;
+	
+	private Adventure curAdventure;
+	
 	public AdventureFragment() {
+		curAdventure = null;
 		rootView = null;
 		running = false;
 		lastPause = 0;
@@ -61,8 +65,17 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	}
 
 	public void startAdventureButtonClicked(View v){
+		EditText advNameEdit = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
+		String newAdvName = advNameEdit.getText().toString();
+		
 		running = true;
 		toggleUI(running);
+		
+		curAdventure  = ((AdventureActivity)this.getActivity()).getCurAdventure();
+		curAdventure.setAdvName(newAdvName);
+		
+		TextView advTitle = (TextView)rootView.findViewById(R.id.adventure_title);
+		advTitle.setText(newAdvName);
 	}
 	
 	public Boolean isRunning(){

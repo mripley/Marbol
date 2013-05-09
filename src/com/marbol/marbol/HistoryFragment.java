@@ -67,6 +67,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			
 			Log.i("DB", "ADDED NEW ENTRY!");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
+			launcher.putExtra("curAdventure", -1);
 			this.startActivity(launcher);
 			
 			break;

@@ -33,6 +33,7 @@ public class NewAdventureFragment extends Fragment implements View.OnClickListen
 		case R.id.NewAdventureButtonMain:
 			Log.i("UI", "Main New Adventure Button Pressed!");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
+			launcher.putExtra("curAdventure", -1);
 			this.startActivity(launcher);
 		}
 	}

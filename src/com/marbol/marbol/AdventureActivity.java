@@ -39,6 +39,8 @@ public class AdventureActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
+	private Adventure curAdventure;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +80,21 @@ public class AdventureActivity extends FragmentActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		if (savedInstanceState != null){
+			savedInstanceState = getIntent().getExtras();
+			if(savedInstanceState.getInt("curAdventure", -1 ) == -1){
+				curAdventure = new Adventure();
+			}
+			else{
+				// TODO: Go get this adventure from the DB
+			}
+		}
+		
+		else{
+			curAdventure = new Adventure();
+		}
+			
 	}
 
 	@Override
@@ -156,6 +173,14 @@ public class AdventureActivity extends FragmentActivity implements
 			}
 			return null;
 		}
+	}
+
+	public Adventure getCurAdventure() {
+		return curAdventure;
+	}
+
+	public void setCurAdventure(Adventure curAdventure) {
+		this.curAdventure = curAdventure;
 	}
 	
 }
