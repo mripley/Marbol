@@ -19,6 +19,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 
 	private View rootView;
 	private Boolean running;
+	private Boolean firstRun;
 	private long lastPause;
 	
 	private Adventure curAdventure;
@@ -27,6 +28,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		curAdventure = null;
 		rootView = null;
 		running = false;
+		firstRun = true;
 		lastPause = 0;
 	}
 
@@ -69,8 +71,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		String newAdvName = advNameEdit.getText().toString();
 		
 		running = true;
+		if (firstRun){
+			firstRun = false;
+		}
 		toggleUI(running);
-		
+
 		curAdventure  = ((AdventureActivity)this.getActivity()).getCurAdventure();
 		curAdventure.setAdvName(newAdvName);
 		
@@ -90,6 +95,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		startButton.setVisibility(running ? Button.INVISIBLE : Button.VISIBLE);
 		startButton.setClickable(!running);
 		
+		// if this isn't our first run update the text to "resume"
+		if (!firstRun){
+			startButton.setText("Resume Adventure");
+		}
+		
 		endButton.setVisibility(running ? Button.VISIBLE : Button.INVISIBLE);
 		endButton.setClickable(running);
 		
@@ -100,7 +110,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 			chrono.start();
 		}
 		else{
-			lastPause = convertToMili(chrono.getText().toString());
+			lastPause = convertToMilli(chrono.getText().toString());
 			Log.i("CHRONO", "setting chronoBase to "+this.lastPause);
 			chrono.stop();
 		}
@@ -132,10 +142,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 	}
 	
-	// convert a string containing a human readable time into miliseconds
-	private long convertToMili(String time) {
+	// convert a string containing a human readable time into milliseconds
+	private long convertToMilli(String time) {
+		
 		String[] split = time.split(":");
-		long retval;
 		// the H:MM:SS case
 		if(split.length == 3){
 			long hours = Long.parseLong(split[0]) * 3600;
