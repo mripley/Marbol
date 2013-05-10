@@ -90,7 +90,6 @@ public class AdventureActivity extends FragmentActivity implements
 				// TODO: Go get this adventure from the DB
 			}
 		}
-		
 		else{
 			curAdventure = new Adventure();
 		}

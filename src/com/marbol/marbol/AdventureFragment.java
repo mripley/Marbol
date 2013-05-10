@@ -100,11 +100,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 			chrono.start();
 		}
 		else{
-			lastPause = SystemClock.elapsedRealtime();
+			lastPause = convertToMili(chrono.getText().toString());
 			Log.i("CHRONO", "setting chronoBase to "+this.lastPause);
 			chrono.stop();
 		}
-		
+
 		EditText adventureEdit = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
 		adventureEdit.setVisibility(running ? EditText.INVISIBLE : EditText.VISIBLE);
 		
@@ -130,5 +130,24 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		
 		text = (TextView)rootView.findViewById(R.id.total_distance_view);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+	}
+	
+	// convert a string containing a human readable time into miliseconds
+	private long convertToMili(String time) {
+		String[] split = time.split(":");
+		long retval;
+		// the H:MM:SS case
+		if(split.length == 3){
+			long hours = Long.parseLong(split[0]) * 3600;
+			long minutes = Long.parseLong(split[1]) * 60;
+			long seconds = Long.parseLong(split[2]);
+			
+			return (hours + minutes + seconds) * 1000;
+		}
+		else{  // just MM:SS
+			long minutes = Long.parseLong(split[0]) * 60;
+			long seconds = Long.parseLong(split[1]);
+			return (minutes + seconds) * 1000;
+		}
 	}
 }
