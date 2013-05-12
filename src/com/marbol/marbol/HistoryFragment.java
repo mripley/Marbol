@@ -54,6 +54,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			adv.setAdvName("Test Adventure");
 			adv.setAdvDistance(42.0);
 			adv.setAdvArea(36.0);
+			adv.setAdvTime(1000);
 			dSource.addAdventure(adv);
 			
 			// close the old cursor

@@ -64,6 +64,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	private void stopAdventureButtonClicked(View v) {
 		running = false;
 		toggleUI(running);
+		
+		// got tell our activity that we are running
+		AdventureActivity activity = (AdventureActivity)this.getActivity();
+		activity.setRunning(true);
 	}
 
 	public void startAdventureButtonClicked(View v){
@@ -81,6 +85,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		
 		TextView advTitle = (TextView)rootView.findViewById(R.id.adventure_title);
 		advTitle.setText(newAdvName);
+		
+		// got tell our activity that we are running
+		AdventureActivity activity = (AdventureActivity)this.getActivity();
+		activity.setRunning(true);
 	}
 	
 	public Boolean isRunning(){

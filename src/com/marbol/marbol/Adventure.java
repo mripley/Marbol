@@ -1,6 +1,9 @@
 package com.marbol.marbol;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import android.location.Location;
 
 public class Adventure {
 
@@ -9,12 +12,15 @@ public class Adventure {
 	private double advArea;
 	private Date advDate;
 	private long AdvID;
-	
+	private ArrayList<Location> gpsPoints;
+	private long advTime;
+
 	public Adventure(String name, double distance, double area, Date date){
 		this.advName = name;
 		this.advDistance = distance;
 		this.advArea = area;
 		this.advDate = date;
+		gpsPoints = new ArrayList<Location>();
 	}
 	
 	public Adventure(){
@@ -23,6 +29,7 @@ public class Adventure {
 		this.advArea = 0;
 		this.advDate = new Date();
 		this.AdvID = -1;
+		gpsPoints = new ArrayList<Location>();
 	}
 	
 	public String getAdvName() {
@@ -64,4 +71,25 @@ public class Adventure {
 	public void setAdvID(long advID) {
 		AdvID = advID;
 	}
+	
+	public ArrayList<Location> getGpsPoints() {
+		return gpsPoints;
+	}
+
+	public void setGpsPoints(ArrayList<Location> gpsPoints) {
+		this.gpsPoints = gpsPoints;
+	}
+	
+	public void addGpsPoint(Location l){
+		this.gpsPoints.add(l);
+	}
+	
+	public long getAdvTime() {
+		return advTime;
+	}
+
+	public void setAdvTime(long advTime) {
+		this.advTime = advTime;
+	}
+
 }

@@ -2,6 +2,7 @@ package com.marbol.marbol;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.ContentValues;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
 import android.util.Log;
 
 public class AdventureDataSource {
@@ -19,7 +21,9 @@ public class AdventureDataSource {
 						           MarbolSQLHelper.ADVENTURE_NAME, 
 								   MarbolSQLHelper.ADVENTURE_DATE,
 								   MarbolSQLHelper.ADVENTURE_AREA,
-								   MarbolSQLHelper.ADVENTURE_DISTANCE};
+								   MarbolSQLHelper.ADVENTURE_DISTANCE, 
+								   MarbolSQLHelper.ADVENTURE_TIME,
+								   MarbolSQLHelper.ADVENTURE_GPS_POINTS};
 	
 	public AdventureDataSource(Context c){
 		dbHelper = new MarbolSQLHelper(c);
@@ -42,7 +46,21 @@ public class AdventureDataSource {
 		// convert our Date to an appropriate string
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
 		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
+		
+		values.put(MarbolSQLHelper.ADVENTURE_TIME, adv.getAdvTime());
+		
+		String points = new String();
+		if(adv.getGpsPoints().size() > 0){
+			// convert the arraylist of points into a single string to stuff into the DB 
+			for(Location l : adv.getGpsPoints()){
+				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+":";
+			}
+		}
+	
+		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
+		
 		long rowID = db.insert(MarbolSQLHelper.TABLE_ADVENTURE, null, values);
+		
 		adv.setAdvID(rowID);
 		return adv;
 	}
@@ -84,7 +102,25 @@ public class AdventureDataSource {
 		retval.setAdvDate(d);
 		retval.setAdvArea(c.getDouble(3));
 		retval.setAdvDistance(c.getDouble(4));
+		retval.setAdvTime(c.getInt(5));
 		
+		// get the string containing all the points 
+		String strPoints = c.getString(6);
+		
+		// convert the string back into a series of locations.
+		ArrayList<Location> points = new ArrayList<Location>();
+		if (points.size() > 0){
+			String[] splitPoints = strPoints.split(":");
+			for (String loc : splitPoints){
+				String[] splitLocation = loc.split(",");
+				Location l = new Location("SQL_db");
+				l.setLongitude(Double.parseDouble(splitLocation[0]));
+				l.setLatitude(Double.parseDouble(splitLocation[1]));
+				l.setAltitude(Double.parseDouble(splitLocation[2]));
+				points.add(l);
+			}
+			retval.setGpsPoints(points);
+		}
 		return retval;
 	}
 

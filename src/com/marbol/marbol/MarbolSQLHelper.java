@@ -13,6 +13,8 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 	public static final String ADVENTURE_DISTANCE = "adventure_dist";
 	public static final String ADVENTURE_AREA = "adventure_area";
 	public static final String ADVENTURE_DATE = "adventure_date";
+	public static final String ADVENTURE_TIME = "adventure_time";
+	public static final String ADVENTURE_GPS_POINTS = "adventure_gps_points";
 	
 	private static final String DATABASE_NAME = "Marbol.db";
 	private static final int DATABASE_VERSION = 1;
@@ -22,7 +24,10 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 			+ ADVENTURE_NAME + " text not null,"
 			+ ADVENTURE_DISTANCE + " real not null, "
 			+ ADVENTURE_AREA + " real not null, "
-			+ ADVENTURE_DATE + " date not null"+ ");";
+			+ ADVENTURE_DATE + " date not null, "
+			+ ADVENTURE_TIME + " integer not null, "
+			+ ADVENTURE_GPS_POINTS + " text not null"
+			+ ");";
 	
 	public MarbolSQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

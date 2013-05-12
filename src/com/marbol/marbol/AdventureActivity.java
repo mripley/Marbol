@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -92,8 +93,7 @@ public class AdventureActivity extends FragmentActivity implements
 		}
 		else{
 			curAdventure = new Adventure();
-		}
-			
+		}			
 	}
 
 	@Override
@@ -180,6 +180,11 @@ public class AdventureActivity extends FragmentActivity implements
 
 	public void setCurAdventure(Adventure curAdventure) {
 		this.curAdventure = curAdventure;
+	}
+
+	public void setRunning(boolean running) {
+		
+		
 	}
 	
 }
