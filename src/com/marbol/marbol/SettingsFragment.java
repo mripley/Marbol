@@ -8,7 +8,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load the preferences from an XML resource
+        // Load the preferences from an XML file
         addPreferencesFromResource(R.xml.preferences);
     }
 

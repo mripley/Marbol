@@ -4,8 +4,11 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +28,13 @@ import android.widget.TextView;
 public class AdventureActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	private SharedPreferences prefs;
+	private LocationListener locationListener;
+	private CountDownTimer timer;
+	private Adventure curAdventure;
+	private Location curLocation;
+	private int gpsPollTime;
+	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -40,7 +50,6 @@ public class AdventureActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
-	private Adventure curAdventure;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +103,21 @@ public class AdventureActivity extends FragmentActivity implements
 		else{
 			curAdventure = new Adventure();
 		}			
+		
+		// count down timer set to our gps poll time. 
+		timer = new CountDownTimer(gpsPollTime*1000, 1000){
+			@Override 
+			public void onFinish(){
+				curAdventure.addGpsPoint(curLocation);
+			}
+
+			@Override
+			public void onTick(long milliUntilFinished) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
 	}
 
 	@Override
