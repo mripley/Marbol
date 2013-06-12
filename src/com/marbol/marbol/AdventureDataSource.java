@@ -86,6 +86,39 @@ public class AdventureDataSource {
 		return cursor;
 	}
 	
+	public Adventure getAdventure(long id){
+		Cursor c = db.query(MarbolSQLHelper.TABLE_ADVENTURE, allColumns, MarbolSQLHelper.COLUMN_ID + " = " + id, null, null, null, null);
+		c.moveToFirst();
+		return cursorToAdventure(c);
+	}
+	
+	public void updateAdventure(Adventure adv){
+		ContentValues values = new ContentValues();
+		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
+		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getAdvDistance());
+		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
+		
+		// convert our Date to an appropriate string
+		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
+		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
+		
+		values.put(MarbolSQLHelper.ADVENTURE_TIME, adv.getAdvTime());
+		
+		String points = new String();
+		if(adv.getGpsPoints().size() > 0){
+			// convert the array list of points into a single string to stuff into the DB 
+			for(Location l : adv.getGpsPoints()){
+				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+":";
+			}
+		}
+	
+		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
+		
+		db.update(MarbolSQLHelper.TABLE_ADVENTURE, values, 
+				  MarbolSQLHelper.COLUMN_ID + "= ?", 
+				  new String[] {String.valueOf(adv.getAdvID())});
+	}
+	
 	private Adventure cursorToAdventure(Cursor c){
 		SimpleDateFormat formater =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d;

@@ -40,14 +40,14 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 		
 		dSource.open();
 		dbCursor= dSource.getAdventures();
+		dSource.close();
 		dbAdapter.changeCursor(dbCursor);
 		this.setListAdapter(dbAdapter);
 		return rootView;
 	}
-	
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.new_adventure_button:
 			Adventure adv = new Adventure();
@@ -55,6 +55,9 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			adv.setAdvDistance(42.0);
 			adv.setAdvArea(36.0);
 			adv.setAdvTime(1000);
+			
+			// open the data base
+			dSource.open();
 			dSource.addAdventure(adv);
 			
 			// close the old cursor
@@ -69,6 +72,10 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			Log.i("DB", "ADDED NEW ENTRY!");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
 			launcher.putExtra("curAdventure", -1);
+			
+			// before we go jumping to the new activity close the DB as we have nothing left to write.
+			dSource.close();
+			
 			this.startActivity(launcher);
 			
 			break;

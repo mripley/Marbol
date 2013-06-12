@@ -28,6 +28,7 @@ import android.widget.TextView;
 public class AdventureActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	private AdventureDataSource dSource;
 	private SharedPreferences prefs;
 	private LocationListener locationListener;
 	private CountDownTimer timer;
@@ -80,6 +81,8 @@ public class AdventureActivity extends FragmentActivity implements
 					}
 				});
 
+		dSource = new AdventureDataSource(this);
+		
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
@@ -91,23 +94,29 @@ public class AdventureActivity extends FragmentActivity implements
 					.setTabListener(this));
 		}
 		
+		dSource.open();
 		if (savedInstanceState != null){
 			savedInstanceState = getIntent().getExtras();
-			if(savedInstanceState.getInt("curAdventure", -1 ) == -1){
+			int curID = savedInstanceState.getInt("curAdventure", -1 );
+			if (curID == -1){
 				curAdventure = new Adventure();
 			}
 			else{
 				// TODO: Go get this adventure from the DB
+				curAdventure = dSource.getAdventure((long)curID);
 			}
 		}
 		else{
 			curAdventure = new Adventure();
 		}			
 		
+		dSource.close();
+		
 		// count down timer set to our gps poll time. 
 		timer = new CountDownTimer(gpsPollTime*1000, 1000){
 			@Override 
 			public void onFinish(){
+				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
 				curAdventure.addGpsPoint(curLocation);
 			}
 
@@ -207,8 +216,15 @@ public class AdventureActivity extends FragmentActivity implements
 	}
 
 	public void setRunning(boolean running) {
+		// start the countdown timer
+		if (running){
+			timer.start();
+		}
+		else{
+			timer.cancel();
+		}
 		
-		
+		// sync the current adventure with the database
 	}
 	
 }
