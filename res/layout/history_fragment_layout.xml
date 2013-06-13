@@ -7,23 +7,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MarbolMain$stats_fragment_layout" >
+    tools:context=".MarbolMain$stats_fragment_layout"
+    android:background="#343434" >
     
     <ListView
         android:id="@+id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/new_adventure_button" >
-        
+        android:layout_above="@+id/new_adventure_button" 
+        android:divider="#6e6e6e"
+        android:dividerHeight="1dp">
     </ListView>
 
-    <Button
+    
+    <ImageButton
         android:id="@+id/new_adventure_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/android:list"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/android:list"
-        android:text="@string/new_adventure_text" />
+        android:layout_alignRight="@+id/android:list"  
+        android:src="@drawable/new_adventure_button_hist_lg"
+        android:background="@android:color/transparent"
+        android:contentDescription="Start new adventure"
+        />
 
 </RelativeLayout>

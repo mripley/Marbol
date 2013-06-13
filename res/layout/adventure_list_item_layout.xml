@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Adventure_Name" />
+            android:text="Adventure_Name"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/adventure_date"
@@ -23,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Date" />
+            android:text="Date" 
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/distance_label"
@@ -31,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:text="@string/distance_label" />
+            android:text="@string/distance_label" 
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/adventure_distance"
@@ -39,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/distance_label"
-            android:text="-1" />
+            android:text="-1"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/adventure_area"
@@ -47,7 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="-1" />
+            android:text="-1"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/area_label"
@@ -55,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/adventure_area"
-            android:text="@string/area_label_string" />
+            android:text="@string/area_label_string"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 
