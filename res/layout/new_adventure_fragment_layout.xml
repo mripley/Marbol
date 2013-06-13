@@ -12,8 +12,6 @@
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/new_adventure_button_lg"
-        android:onClick="onClick"
-        android:text="@string/new_adventure_text"
-        android:textColor="#FFFFFF" />
+        android:onClick="onClick"/>
 
 </RelativeLayout>

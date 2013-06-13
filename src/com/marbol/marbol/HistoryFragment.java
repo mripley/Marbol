@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.content.Intent;
 import android.database.Cursor;
 
@@ -29,7 +30,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 		
 		View rootView = inflater.inflate(R.layout.history_fragment_layout, container, false);
 		
-		Button newAdvButton = (Button)rootView.findViewById(R.id.new_adventure_button);
+		ImageButton newAdvButton = (ImageButton)rootView.findViewById(R.id.new_adventure_button);
 		newAdvButton.setOnClickListener(this);
 		dSource = new AdventureDataSource(this.getActivity());
 		dbAdapter = new SimpleCursorAdapter(getActivity(),
