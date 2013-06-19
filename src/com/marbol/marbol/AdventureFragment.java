@@ -30,6 +30,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		running = false;
 		firstRun = true;
 		lastPause = 0;
+		Log.i("Adventure", "Adventure Fragment created!");
 	}
 
 	@Override

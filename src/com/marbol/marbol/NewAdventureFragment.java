@@ -15,6 +15,7 @@ import android.widget.Button;
 public class NewAdventureFragment extends Fragment implements View.OnClickListener {
 
 	public NewAdventureFragment() {
+		Log.i("Adventure", "Adventure fragment created!");
 	}
 
 	@Override

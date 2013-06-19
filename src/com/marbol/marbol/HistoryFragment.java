@@ -22,7 +22,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 	private AdventureDataSource dSource;
 	private Cursor dbCursor;
 	public HistoryFragment() {
-
+		Log.i("Histroy", "History fragment created!");
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			// refresh the views
 			dbAdapter.notifyDataSetChanged();
 			
-			Log.i("DB", "ADDED NEW ENTRY!");
+			Log.i("DB", "adding new adventure entry to DB");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
 			launcher.putExtra("curAdventure", -1);
 			

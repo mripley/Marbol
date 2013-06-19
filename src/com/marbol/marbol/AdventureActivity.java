@@ -116,6 +116,15 @@ public class AdventureActivity extends FragmentActivity implements
 		timer = new CountDownTimer(gpsPollTime*1000, 1000){
 			@Override 
 			public void onFinish(){
+				
+				if (curAdventure == null){
+					Log.i("ERROR", "Cowardly refusing to update due to null cur adventure");
+					return;
+				}
+				if (curLocation == null){
+					Log.i("ERROR", "Cowardly refusing to update due to null location ");
+				}
+				
 				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
 				curAdventure.addGpsPoint(curLocation);
 			}

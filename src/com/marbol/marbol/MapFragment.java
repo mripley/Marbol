@@ -2,6 +2,7 @@ package com.marbol.marbol;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 public class MapFragment extends Fragment {
 
 	public MapFragment() {
+		Log.i("Map", "Map fragment created");
 	}
 
 	@Override
