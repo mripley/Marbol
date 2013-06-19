@@ -4,9 +4,11 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -35,15 +37,8 @@ public class AdventureActivity extends FragmentActivity implements
 	private Adventure curAdventure;
 	private Location curLocation;
 	private int gpsPollTime;
+	private LocationManager locationManager;
 	
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
@@ -93,6 +88,10 @@ public class AdventureActivity extends FragmentActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		// register the location listener
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 		
 		dSource.open();
 		if (savedInstanceState != null){
