@@ -3,6 +3,8 @@ package com.marbol.marbol;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.android.maps.GeoPoint;
+
 import android.location.Location;
 
 public class Adventure {
@@ -80,8 +82,8 @@ public class Adventure {
 		this.gpsPoints = gpsPoints;
 	}
 	
-	public void addGpsPoint(Location l){
-		this.gpsPoints.add(l);
+	public void addGpsPoint(Location curLocation){
+		this.gpsPoints.add(curLocation);
 	}
 	
 	public long getAdvTime() {

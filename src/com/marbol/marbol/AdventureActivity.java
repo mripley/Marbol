@@ -2,6 +2,8 @@ package com.marbol.marbol;
 
 import java.util.Locale;
 
+import com.google.android.maps.GeoPoint;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -11,28 +13,22 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+
 
 public class AdventureActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private AdventureDataSource dSource;
 	private SharedPreferences prefs;
-	private LocationListener locationListener;
+	private MarbolLocationListener locationListener;
 	private CountDownTimer timer;
 	private Adventure curAdventure;
 	private Location curLocation;
@@ -51,7 +47,11 @@ public class AdventureActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_adventure);
-
+		
+		// get the preference and the gps poll time
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
+		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -93,16 +93,18 @@ public class AdventureActivity extends FragmentActivity implements
 		locationListener = new MarbolLocationListener();
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-		
+
+		// open the DB and got fetch our current adventure if we have one
 		dSource.open();
 		if (savedInstanceState != null){
 			savedInstanceState = getIntent().getExtras();
 			int curID = savedInstanceState.getInt("curAdventure", -1 );
 			if (curID == -1){
+				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
 			}
 			else{
-				// TODO: Go get this adventure from the DB
+				Log.i("INFO", "Loading adventure: " + (long)curID);
 				curAdventure = dSource.getAdventure((long)curID);
 			}
 		}
@@ -113,10 +115,12 @@ public class AdventureActivity extends FragmentActivity implements
 		dSource.close();
 		
 		// count down timer set to our gps poll time. 
-		timer = new CountDownTimer(gpsPollTime*1000, 1000){
+		timer = new CountDownTimer(gpsPollTime, 1000){
 			@Override 
 			public void onFinish(){
-				Log.i("ERROR", "poll time = "+gpsPollTime);
+				// go get the most up to date location
+				curLocation = locationListener.getLocation();
+				
 				if (curAdventure == null){
 					Log.i("ERROR", "Cowardly refusing to update due to null cur adventure");
 					this.start();

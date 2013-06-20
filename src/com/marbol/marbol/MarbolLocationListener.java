@@ -8,15 +8,12 @@ import android.util.Log;
 
 public class MarbolLocationListener implements LocationListener{
 
-	private GeoPoint curLocation;
+	private Location curLocation;
 	@Override
 	public void onLocationChanged(Location loc) {
 		if (loc != null){
-			curLocation = new GeoPoint(
-					(int) (loc.getLatitude() * 1E6), 
-					(int) (loc.getLongitude() * 1E6));
+			curLocation = loc;		
 		}
-		
 	}
 
 	
@@ -34,7 +31,7 @@ public class MarbolLocationListener implements LocationListener{
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 	}
 
-	public GeoPoint getLocation(){
+	public Location getLocation(){
 		return this.curLocation;
 	}
 }

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.android.maps.GeoPoint;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
