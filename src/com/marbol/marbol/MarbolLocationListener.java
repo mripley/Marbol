@@ -34,4 +34,7 @@ public class MarbolLocationListener implements LocationListener{
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 	}
 
+	public GeoPoint getLocation(){
+		return this.curLocation;
+	}
 }

@@ -90,8 +90,9 @@ public class AdventureActivity extends FragmentActivity implements
 		}
 		
 		// register the location listener
+		locationListener = new MarbolLocationListener();
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		
 		dSource.open();
 		if (savedInstanceState != null){
@@ -112,7 +113,7 @@ public class AdventureActivity extends FragmentActivity implements
 		dSource.close();
 		
 		// count down timer set to our gps poll time. 
-		timer = new CountDownTimer(gpsPollTime*1000, 1000){
+		timer = new CountDownTimer(gpsPollTime, 1000){
 			@Override 
 			public void onFinish(){
 				
