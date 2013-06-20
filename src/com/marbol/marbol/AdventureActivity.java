@@ -91,7 +91,7 @@ public class AdventureActivity extends FragmentActivity implements
 		
 		// register the location listener
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+//		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 		
 		dSource.open();
 		if (savedInstanceState != null){
@@ -122,6 +122,7 @@ public class AdventureActivity extends FragmentActivity implements
 				}
 				if (curLocation == null){
 					Log.i("ERROR", "Cowardly refusing to update due to null location ");
+					return;
 				}
 				
 				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
