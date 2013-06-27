@@ -105,7 +105,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	private void updateUI(Adventure adv){
 		TextView text;
 		text = (TextView)rootView.findViewById(R.id.points_collected_view);
-		text.setText("blam");
+		text.setText(adv.getNumGpsPoints().toString());
 	
 		Double area = adv.getAdvArea();
 		text = (TextView)rootView.findViewById(R.id.total_area_view);
