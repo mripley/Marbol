@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * Fragment containing the logic to handle the "Map" Fragment
  */
-public class AdventureFragment extends Fragment implements View.OnClickListener{
+public class AdventureFragment extends Fragment implements View.OnClickListener, MarbolUIFragment{
 
 	private View rootView;
 	private Boolean running;
@@ -102,10 +102,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		activity.setRunning(true);
 	}
 	
-	private void updateAdvUI(Adventure adv){
+	private void updateUI(Adventure adv){
 		TextView text;
 		text = (TextView)rootView.findViewById(R.id.points_collected_view);
-		text.setText(adv.getGpsPoints().size());
+		text.setText("blam");
 	
 		Double area = adv.getAdvArea();
 		text = (TextView)rootView.findViewById(R.id.total_area_view);
@@ -119,7 +119,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	// call back for the main adventure activity to update the current adventure
 	public void updateAdventure(Adventure adv){
 		this.curAdventure = adv;
-		updateAdvUI(curAdventure);
+		updateUI(curAdventure);
 	}
 	
 	public Boolean isRunning(){
@@ -199,4 +199,5 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 			return (minutes + seconds) * 1000;
 		}
 	}
+
 }

@@ -94,4 +94,8 @@ public class Adventure {
 		this.advTime = advTime;
 	}
 
+	public Integer getNumGpsPoints() {
+		return this.gpsPoints.size();	
+	}
+
 }

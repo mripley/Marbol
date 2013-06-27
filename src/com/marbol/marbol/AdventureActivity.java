@@ -1,5 +1,7 @@
 package com.marbol.marbol;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import com.google.android.maps.GeoPoint;
@@ -36,7 +38,7 @@ public class AdventureActivity extends FragmentActivity implements
 	private LocationManager locationManager;
 	private boolean newAdventure;
 	private FragmentManager fragManager;
-	private Fragment curFragment;
+	private List<Fragment> fragmentList;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -47,6 +49,7 @@ public class AdventureActivity extends FragmentActivity implements
 
 	public AdventureActivity(){
 		newAdventure = false;
+		fragmentList = new ArrayList<Fragment>();
 	}
 	
 	@Override
@@ -145,6 +148,11 @@ public class AdventureActivity extends FragmentActivity implements
 				
 				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
 				curAdventure.addGpsPoint(curLocation);
+				
+				for (Fragment f : fragmentList){
+					((MarbolUIFragment) f).updateAdventure(curAdventure);
+				}
+				
 				this.start();
 			}
 
@@ -160,7 +168,7 @@ public class AdventureActivity extends FragmentActivity implements
 	@Override
 	public void onAttachFragment (Fragment fragment) {
 		// update the current fragment
-		curFragment = fragment;
+		fragmentList.add(fragment);
 	}
 	
 	@Override

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 /**
  * Fragment containing the logic to handle the "Map" Fragment
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements MarbolUIFragment {
 
 	public MapFragment() {
 		Log.i("Map", "Map fragment created");
@@ -22,5 +22,16 @@ public class MapFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.map_fragment_layout, container, false);
 
 		return rootView;
+	}
+
+	public void updateUI(Adventure adv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateAdventure(Adventure adv) {
+		// TODO Auto-generated method stub
+		
 	}
 }
