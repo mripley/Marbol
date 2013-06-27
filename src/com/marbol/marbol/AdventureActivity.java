@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -34,6 +34,9 @@ public class AdventureActivity extends FragmentActivity implements
 	private Location curLocation;
 	private int gpsPollTime;
 	private LocationManager locationManager;
+	private boolean newAdventure;
+	private FragmentManager fragManager;
+	private Fragment curFragment;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -42,12 +45,15 @@ public class AdventureActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
+	public AdventureActivity(){
+		newAdventure = false;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_adventure);
-		
+		Log.i("INFO", "Adventure Activity on create called");
 		// get the preference and the gps poll time
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
@@ -58,8 +64,7 @@ public class AdventureActivity extends FragmentActivity implements
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -102,17 +107,23 @@ public class AdventureActivity extends FragmentActivity implements
 			if (curID == -1){
 				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
+				
+				newAdventure = true;
 			}
 			else{
 				Log.i("INFO", "Loading adventure: " + (long)curID);
 				curAdventure = dSource.getAdventure((long)curID);
+				newAdventure = false;
 			}
 		}
 		else{
+			Log.i("INFO", "No saved instance state!");
 			curAdventure = new Adventure();
+			newAdventure = true;
 		}			
 		
 		dSource.close();
+		fragManager = this.getSupportFragmentManager();
 		
 		// count down timer set to our gps poll time. 
 		timer = new CountDownTimer(gpsPollTime, 1000){
@@ -145,7 +156,13 @@ public class AdventureActivity extends FragmentActivity implements
 			
 		};
 	}
-
+	
+	@Override
+	public void onAttachFragment (Fragment fragment) {
+		// update the current fragment
+		curFragment = fragment;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -171,8 +188,6 @@ public class AdventureActivity extends FragmentActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-
-	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -187,7 +202,7 @@ public class AdventureActivity extends FragmentActivity implements
 		public Fragment getItem(int position) {
 			
 			Fragment fragment;
-			
+			Log.i("FRAG", "get item got called: "+position);
 			switch(position){
 			case 0:
 				fragment = new AdventureFragment();
@@ -198,10 +213,6 @@ public class AdventureActivity extends FragmentActivity implements
 			default:
 				fragment = new Fragment();
 			}
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-			//Bundle args = new Bundle();
 			return fragment;
 		}
 
@@ -242,6 +253,11 @@ public class AdventureActivity extends FragmentActivity implements
 		}
 		
 		// sync the current adventure with the database
+		if (curAdventure != null && running == false)
+		{
+			dSource.updateAdventure(curAdventure);
+		}
+		
 	}
 	
 }

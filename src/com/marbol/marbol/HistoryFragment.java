@@ -51,11 +51,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.new_adventure_button:
-			Adventure adv = new Adventure();
-			adv.setAdvName("Test Adventure");
-			adv.setAdvDistance(42.0);
-			adv.setAdvArea(36.0);
-			adv.setAdvTime(1000);
+			Adventure adv = ((AdventureActivity)this.getActivity()).getCurAdventure();
 			
 			// open the data base
 			dSource.open();

@@ -23,6 +23,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	private long lastPause;
 	
 	private Adventure curAdventure;
+	private AdventureDataSource dSource;
 	
 	public AdventureFragment() {
 		curAdventure = null;
@@ -37,6 +38,9 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.adventure_fragment, container, false);
+		
+		// get the data source
+		dSource = new AdventureDataSource(this.getActivity());
 		
 		// set the on click listener for the start button
 		Button button = (Button)rootView.findViewById(R.id.start_adventure_button);
@@ -87,9 +91,35 @@ public class AdventureFragment extends Fragment implements View.OnClickListener{
 		TextView advTitle = (TextView)rootView.findViewById(R.id.adventure_title);
 		advTitle.setText(newAdvName);
 		
+		// open the data base
+		dSource.open();
+		// write our adventure to the db before we start recording
+		dSource.addAdventure(curAdventure);
+		dSource.close();
+		
 		// got tell our activity that we are running
 		AdventureActivity activity = (AdventureActivity)this.getActivity();
 		activity.setRunning(true);
+	}
+	
+	private void updateAdvUI(Adventure adv){
+		TextView text;
+		text = (TextView)rootView.findViewById(R.id.points_collected_view);
+		text.setText(adv.getGpsPoints().size());
+	
+		Double area = adv.getAdvArea();
+		text = (TextView)rootView.findViewById(R.id.total_area_view);
+		text.setText(area.toString());
+		
+		Double distance = adv.getAdvDistance();
+		text = (TextView)rootView.findViewById(R.id.total_distance_view);
+		text.setText(distance.toString());
+	}
+	
+	// call back for the main adventure activity to update the current adventure
+	public void updateAdventure(Adventure adv){
+		this.curAdventure = adv;
+		updateAdvUI(curAdventure);
 	}
 	
 	public Boolean isRunning(){
