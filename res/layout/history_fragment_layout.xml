@@ -27,7 +27,7 @@
         android:layout_alignLeft="@+id/android:list"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/android:list"  
-        android:src="@drawable/new_adventure_button_hist_lg"
+        android:src="@drawable/new_adventure_button_sm"
         android:background="@android:color/transparent"
         android:contentDescription="Start new adventure"
         />
