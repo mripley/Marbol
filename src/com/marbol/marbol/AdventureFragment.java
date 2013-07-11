@@ -54,6 +54,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	}
 	
 	public void onClick(View v){
+				
 		switch(v.getId()){
 		case R.id.start_adventure_button:
 			startAdventureButtonClicked(v);

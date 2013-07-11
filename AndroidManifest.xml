@@ -48,7 +48,7 @@
             android:name="com.marbol.marbol.AdventureActivity"
             android:label="@string/adventure_activity_title" >
         </activity>
-        
+        <uses-library android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBje1zLEvCS1MBAvk8BFIkXXFLyzx_nYgg" />
@@ -56,6 +56,4 @@
    	 <uses-feature
    	     android:glEsVersion="0x00020000"
    	     android:required="true" />
-    
-    
 </manifest>

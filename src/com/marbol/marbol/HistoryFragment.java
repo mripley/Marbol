@@ -49,36 +49,35 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 
 	@Override
 	public void onClick(View v){
-		switch(v.getId()){
-		case R.id.new_adventure_button:
-			Adventure adv = ((AdventureActivity)this.getActivity()).getCurAdventure();
-			
-			// open the data base
-			dSource.open();
-			dSource.addAdventure(adv);
-			
-			// close the old cursor
-			dbCursor.close();
-			
-			// refresh the query
-			dbCursor = dSource.getAdventures();
-			dbAdapter.changeCursor(dbCursor);
-			// refresh the views
-			dbAdapter.notifyDataSetChanged();
-			
-			Log.i("DB", "adding new adventure entry to DB");
-			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
-			launcher.putExtra("curAdventure", -1);
-			
-			// before we go jumping to the new activity close the DB as we have nothing left to write.
-			dSource.close();
-			
-			this.startActivity(launcher);
-			
-			break;
-		default:
-			Log.e("ERROR", "No click handler found!");
-		}
 		
+		switch(v.getId()){
+			case R.id.new_adventure_button:
+				
+				// open the data base
+				dSource.open();
+				dSource.addAdventure(new Adventure());
+				
+				// close the old cursor
+				dbCursor.close();
+				
+				// refresh the query
+				dbCursor = dSource.getAdventures();
+				dbAdapter.changeCursor(dbCursor);
+				// refresh the views
+				dbAdapter.notifyDataSetChanged();
+				
+				Log.i("DB", "adding new adventure entry to DB");
+				Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
+				launcher.putExtra("curAdventure", -1);
+				
+				// before we go jumping to the new activity close the DB as we have nothing left to write.
+				dSource.close();
+				
+				this.startActivity(launcher);
+				break;
+			default:
+				Log.e("ERROR", "No click handler found!");
+				break;
+		}
 	}
 }

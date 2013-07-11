@@ -125,7 +125,6 @@ public class AdventureActivity extends FragmentActivity implements
 		}			
 		
 		dSource.close();
-		fragManager = this.getSupportFragmentManager();
 		
 		// count down timer set to our gps poll time. 
 		timer = new CountDownTimer(gpsPollTime, 1000){
@@ -148,6 +147,7 @@ public class AdventureActivity extends FragmentActivity implements
 				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
 				curAdventure.addGpsPoint(curLocation);
 				
+				// NOTE the fragmentList should only ever contain MarbolUIFragments otherwise explosions happen
 				for (Fragment f : fragmentList){
 					((MarbolUIFragment) f).updateAdventure(curAdventure);
 				}
@@ -166,8 +166,12 @@ public class AdventureActivity extends FragmentActivity implements
 	
 	@Override
 	public void onAttachFragment (Fragment fragment) {
-		// update the current fragment
-		fragmentList.add(fragment);
+		
+		// if this fragment is a MarbolUIFragment then add it to the fragment list.
+		if (MarbolUIFragment.class.isAssignableFrom(fragment.getClass()))
+		{
+			fragmentList.add(fragment);	
+		}
 	}
 	
 	@Override

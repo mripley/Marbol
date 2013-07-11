@@ -82,15 +82,15 @@ public class MarbolMain extends FragmentActivity implements
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
+	public boolean onOptionsItemSelected(MenuItem item){		
 		switch(item.getItemId()){
 		case R.id.action_settings:
 			// launch the settings activity
 			Intent settingsIntent = new Intent(this, SettingsActivity.class);
 			startActivity(settingsIntent);
 			return true;
-		
 		}
+		
 		return false;
 	}
 	

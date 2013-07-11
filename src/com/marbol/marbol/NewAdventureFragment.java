@@ -30,8 +30,8 @@ public class NewAdventureFragment extends Fragment implements View.OnClickListen
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.NewAdventureButtonMain:
+		final int id = v.getId();
+		if (id == R.id.NewAdventureButtonMain){
 			Log.i("UI", "Main New Adventure Button Pressed!");
 			Intent launcher = new Intent(this.getActivity(), AdventureActivity.class);
 			launcher.putExtra("curAdventure", -1);
