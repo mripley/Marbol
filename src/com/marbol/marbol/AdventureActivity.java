@@ -109,7 +109,6 @@ public class AdventureActivity extends FragmentActivity implements
 			if (curID == -1){
 				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
-				
 				newAdventure = true;
 			}
 			else{
@@ -266,7 +265,15 @@ public class AdventureActivity extends FragmentActivity implements
 		// sync the current adventure with the database
 		if (curAdventure != null && running == false)
 		{
-			dSource.updateAdventure(curAdventure);
+			if (newAdventure)
+			{
+				curAdventure = dSource.addAdventure(curAdventure);
+				newAdventure = false;
+			}
+			else
+			{
+				dSource.updateAdventure(curAdventure);
+			}
 		}
 		
 	}

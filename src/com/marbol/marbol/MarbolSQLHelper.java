@@ -17,7 +17,7 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 	public static final String ADVENTURE_GPS_POINTS = "adventure_gps_points";
 	
 	private static final String DATABASE_NAME = "Marbol.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	private static final String CREATE_DB = "create table "
 			+ TABLE_ADVENTURE + "(" + COLUMN_ID +" integer primary key autoincrement, "
