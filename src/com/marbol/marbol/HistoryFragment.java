@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 
@@ -24,10 +27,10 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 	public HistoryFragment() {
 		Log.i("Histroy", "History fragment created!");
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		View rootView = inflater.inflate(R.layout.history_fragment_layout, container, false);
 		
 		ImageButton newAdvButton = (ImageButton)rootView.findViewById(R.id.new_adventure_button);
@@ -44,9 +47,27 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 		dSource.close();
 		dbAdapter.changeCursor(dbCursor);
 		this.setListAdapter(dbAdapter);
-		return rootView;
+
+		return rootView; 
 	}
 	
+	@Override
+	public void onActivityCreated (Bundle savedInstanceState)
+	{
+		final Activity activity = this.getActivity();
+		
+		super.onActivityCreated(savedInstanceState);
+		this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
+				Adventure adv = (Adventure)dbAdapter.getItem(position);
+				Intent launcher = new Intent(activity, AdventureActivity.class);
+				launcher.putExtra("curAdventure", adv.getAdvID());
+				activity.startActivity(launcher);
+			}
+		});	
+	}
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -78,10 +99,6 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 		
 		// open the data base
 		dSource.open();
-		dSource.addAdventure(new Adventure());
-		
-		// close the old cursor
-		dbCursor.close();
 		
 		// refresh the query
 		dbCursor = dSource.getAdventures();
