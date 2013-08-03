@@ -15,9 +15,12 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 	public static final String ADVENTURE_DATE = "adventure_date";
 	public static final String ADVENTURE_TIME = "adventure_time";
 	public static final String ADVENTURE_GPS_POINTS = "adventure_gps_points";
+	public static final String ADVENTURE_ELEVATION = "adventure_elevation";
+	public static final String ADVENTURE_SPEED = "adventure_speed";
+	
 	
 	private static final String DATABASE_NAME = "Marbol.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 7;
 
 	private static final String CREATE_DB = "create table "
 			+ TABLE_ADVENTURE + "(" + COLUMN_ID +" integer primary key autoincrement, "
@@ -26,7 +29,9 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 			+ ADVENTURE_AREA + " real not null, "
 			+ ADVENTURE_DATE + " date not null, "
 			+ ADVENTURE_TIME + " integer not null, "
-			+ ADVENTURE_GPS_POINTS + " text not null"
+			+ ADVENTURE_GPS_POINTS + " text not null, "
+			+ ADVENTURE_ELEVATION + " real not null, "
+			+ ADVENTURE_SPEED + " real not null "
 			+ ");";
 	
 	public MarbolSQLHelper(Context context) {

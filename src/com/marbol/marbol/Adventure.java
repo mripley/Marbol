@@ -16,6 +16,8 @@ public class Adventure {
 	private long AdvID;
 	private ArrayList<Location> gpsPoints;
 	private long advTime;
+	private double elevationChange;
+	private double averageSpeed;
 
 	public Adventure(String name, double distance, double area, Date date){
 		this.advName = name;
@@ -96,6 +98,30 @@ public class Adventure {
 
 	public Integer getNumGpsPoints() {
 		return this.gpsPoints.size();	
+	}
+	
+	@Override
+	public String toString()
+	{
+		String str = "ID: " + this.AdvID + " Adventure: " + this.advName + " time: " + this.advTime + " area: " + this.advArea;
+		str += " distance: " + this.advDistance + " num GPS points: " + this.gpsPoints.size();
+		return str;
+	}
+
+	public double getElevationChange() {
+		return elevationChange;
+	}
+
+	public void setElevationChange(double elevationChange) {
+		this.elevationChange = elevationChange;
+	}
+	
+	public double getAverageSpeed() {
+		return averageSpeed;
+	}
+
+	public void setAverageSpeed(double averageSpeed) {
+		this.averageSpeed = averageSpeed;
 	}
 
 }

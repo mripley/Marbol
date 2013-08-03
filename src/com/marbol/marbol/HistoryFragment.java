@@ -52,7 +52,7 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 	}
 	
 	@Override
-	public void onActivityCreated (Bundle savedInstanceState)
+	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		final Activity activity = this.getActivity();
 		
@@ -61,12 +61,13 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 
 			@Override
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				Adventure adv = (Adventure)dbAdapter.getItem(position);
+				Adventure adv = (Adventure)AdventureDataSource.cursorToAdventure((Cursor)dbAdapter.getItem(position));
 				Intent launcher = new Intent(activity, AdventureActivity.class);
-				launcher.putExtra("curAdventure", adv.getAdvID());
+				launcher.putExtra("com.marbol.marbol.curAdventure", adv.getAdvID());
 				activity.startActivity(launcher);
 			}
 		});	
+		
 	}
 	@Override
 	public void onResume(){

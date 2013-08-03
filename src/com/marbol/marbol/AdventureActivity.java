@@ -51,6 +51,10 @@ public class AdventureActivity extends FragmentActivity implements
 		fragmentList = new ArrayList<Fragment>();
 	}
 	
+	public boolean isNewAdventure() {
+		return newAdventure;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,9 +107,9 @@ public class AdventureActivity extends FragmentActivity implements
 
 		// open the DB and got fetch our current adventure if we have one
 		dSource.open();
+		savedInstanceState = getIntent().getExtras();
 		if (savedInstanceState != null){
-			savedInstanceState = getIntent().getExtras();
-			int curID = savedInstanceState.getInt("curAdventure", -1 );
+			long curID = savedInstanceState.getLong("com.marbol.marbol.curAdventure", -1 );
 			if (curID == -1){
 				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
@@ -212,7 +216,6 @@ public class AdventureActivity extends FragmentActivity implements
 		public Fragment getItem(int position) {
 			
 			Fragment fragment;
-			Log.i("FRAG", "get item got called: "+position);
 			switch(position){
 			case 0:
 				fragment = new AdventureFragment();
@@ -251,6 +254,7 @@ public class AdventureActivity extends FragmentActivity implements
 
 	public void setCurAdventure(Adventure curAdventure) {
 		this.curAdventure = curAdventure;
+		this.newAdventure = false;
 	}
 
 	public void setRunning(boolean running) {
@@ -265,15 +269,10 @@ public class AdventureActivity extends FragmentActivity implements
 		// sync the current adventure with the database
 		if (curAdventure != null && running == false)
 		{
-			if (newAdventure)
-			{
-				curAdventure = dSource.addAdventure(curAdventure);
-				newAdventure = false;
-			}
-			else
-			{
-				dSource.updateAdventure(curAdventure);
-			}
+			Log.i("DB", "Updating adventure");
+			dSource.open();
+			dSource.updateAdventure(curAdventure);
+			dSource.close();
 		}
 		
 	}

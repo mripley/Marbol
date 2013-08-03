@@ -60,6 +60,8 @@ public class AdventureDataSource {
 		}
 	
 		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
+		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationChange());
+		values.put(MarbolSQLHelper.ADVENTURE_SPEED, adv.getAverageSpeed());
 		
 		long rowID = db.insert(MarbolSQLHelper.TABLE_ADVENTURE, null, values);
 		
@@ -103,7 +105,6 @@ public class AdventureDataSource {
 		// convert our Date to an appropriate string
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
 		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
-		
 		values.put(MarbolSQLHelper.ADVENTURE_TIME, adv.getAdvTime());
 		
 		String points = new String();
@@ -115,13 +116,15 @@ public class AdventureDataSource {
 		}
 	
 		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
+		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationChange());
+		values.put(MarbolSQLHelper.ADVENTURE_SPEED, adv.getAverageSpeed());
 		
 		db.update(MarbolSQLHelper.TABLE_ADVENTURE, values, 
 				  MarbolSQLHelper.COLUMN_ID + "= ?", 
 				  new String[] {String.valueOf(adv.getAdvID())});
 	}
 	
-	private Adventure cursorToAdventure(Cursor c){
+	public static Adventure cursorToAdventure(Cursor c){
 		SimpleDateFormat formater =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d;
 		Adventure retval = new Adventure();
@@ -137,25 +140,26 @@ public class AdventureDataSource {
 		retval.setAdvDate(d);
 		retval.setAdvArea(c.getDouble(3));
 		retval.setAdvDistance(c.getDouble(4));
-		retval.setAdvTime(c.getInt(5));
+		retval.setAdvTime(c.getLong(5));
 		
 		// get the string containing all the points 
 		String strPoints = c.getString(6);
 		
 		// convert the string back into a series of locations.
 		ArrayList<Location> points = new ArrayList<Location>();
-		if (points.size() > 0){
-			String[] splitPoints = strPoints.split(":");
-			for (String loc : splitPoints){
-				String[] splitLocation = loc.split(",");
-				Location l = new Location("SQL_db");
-				l.setLongitude(Double.parseDouble(splitLocation[0]));
-				l.setLatitude(Double.parseDouble(splitLocation[1]));
-				l.setAltitude(Double.parseDouble(splitLocation[2]));
-				points.add(l);
-			}
-			retval.setGpsPoints(points);
+		String[] splitPoints = strPoints.split(":");
+		for (String loc : splitPoints) {
+			String[] splitLocation = loc.split(",");
+			Location l = new Location("SQL_db");
+			l.setLongitude(Double.parseDouble(splitLocation[0]));
+			l.setLatitude(Double.parseDouble(splitLocation[1]));
+			l.setAltitude(Double.parseDouble(splitLocation[2]));
+			points.add(l);
 		}
+		retval.setGpsPoints(points);
+		
+		retval.setElevationChange(c.getDouble(7));
+		retval.setAverageSpeed(c.getDouble(8));
 		return retval;
 	}
 

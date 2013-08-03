@@ -6,61 +6,40 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AdventureActivity$DummySectionFragment">
-
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    tools:context=".AdventureActivity$DummySectionFragment"
+    android:background="#000000">
 
     <TextView
         android:id="@+id/AdventureNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/section_label"
-        android:text="Name" />
+        android:text="Name" 
+        android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/AdventureNameEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/section_label"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/AdventureNameLabel"
-        android:ems="10" >
+        android:ems="10" 
+        android:textColor="#FFFFFF">
 
-        <requestFocus />
+        <requestFocus
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </EditText>
-
-    <Button
-        android:id="@+id/start_adventure_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Start Adventure" />
-
-    <Button
-        android:id="@+id/stop_adventure_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/start_adventure_button"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="24dp"
-        android:clickable="false"
-        android:longClickable="true"
-        android:text="Stop Adventure"
-        android:visibility="invisible" />
 
     <Chronometer
         android:id="@+id/timer_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
         android:text="Time"
+        android:textColor="#FFFFFF"
         android:textSize="48dp" />
 
     <TextView
@@ -70,62 +49,162 @@
         android:layout_alignLeft="@+id/start_adventure_button"
         android:layout_alignRight="@+id/AdventureNameEdit"
         android:layout_alignTop="@+id/AdventureNameLabel"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/start_adventure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text="Start Adventure" 
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/stop_adventure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/start_adventure_button"
+        android:layout_alignBottom="@+id/start_adventure_button"
+        android:layout_alignLeft="@+id/start_adventure_button"
+        android:clickable="false"
+        android:longClickable="true"
+        android:text="Stop Adventure"
+        android:visibility="invisible"
+        android:textColor="#FFFFFF" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:columnCount="2"
+        android:rowCount="2" >
+
+        <LinearLayout
+            android:id="@+id/area_layout"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/area_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/area_icon" 
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/area_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1" 
+                android:textColor="#FFFFFF"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/speed_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/speed_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avg_speed_icon" 
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/speed_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+				android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/distance_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/distance_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/distance_icon" 
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/distance_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF" 
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/elevation_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/elevation_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/elevation_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/elevation_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+    </GridLayout>
 
     <TextView
         android:id="@+id/total_points_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/section_label"
-        android:layout_below="@+id/timer_clock"
-        android:text="Points Collected:"
-        android:visibility="invisible" />
+        android:layout_above="@+id/start_adventure_button"
+        android:layout_marginBottom="44dp"
+        android:layout_toLeftOf="@+id/timer_clock"
+        android:text="Total Points:" 
+        android:visibility="invisible"/>
 
     <TextView
-        android:id="@+id/points_collected_view"
+        android:id="@+id/total_points_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/total_points_label"
         android:layout_alignBottom="@+id/total_points_label"
-        android:layout_toRightOf="@id/total_points_label"
-        android:text="-1"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/total_distance_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/total_points_label"
-        android:layout_below="@+id/total_points_label"
-        android:text="Total Distance:"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/total_distance_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/total_distance_label"
         android:layout_toRightOf="@+id/total_points_label"
-        android:text="-1"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/total_area_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/total_distance_label"
-        android:layout_below="@+id/total_distance_label"
-        android:text="Total Area:"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/total_area_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/total_area_label"
-        android:layout_alignBottom="@+id/total_area_label"
-        android:layout_toRightOf="@id/total_area_label"
-        android:text="-1"
-        android:visibility="invisible" />
+        android:text="-1" 
+        android:visibility="invisible"/>
 
 </RelativeLayout>

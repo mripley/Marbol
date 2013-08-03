@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -52,9 +54,41 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		
 		return rootView;
 	}
+		
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		AdventureActivity activity = (AdventureActivity)this.getActivity();
+		this.curAdventure = activity.getCurAdventure();
+		
+		EditText text = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
+		text.setText(curAdventure.getAdvName());
+		
+		
+		if (!activity.isNewAdventure()){
+			firstRun = false;
+			Chronometer chrono = (Chronometer)rootView.findViewById(R.id.timer_clock);
+		
+			long seconds = convertToSeconds(curAdventure.getAdvTime());
+			chrono.setText("0:"+Long.toString(seconds));
+			lastPause = curAdventure.getAdvTime();
+			
+			chrono.setBase(SystemClock.elapsedRealtime() - lastPause);
+			
+			Button stopButton = (Button)rootView.findViewById(R.id.start_adventure_button);
+			stopButton.setText("Resume Adventure");
+			stopButton.setVisibility(Button.VISIBLE);
+			
+			updateUI(curAdventure);
+		}
+		else
+		{
+			firstRun = true;
+		}
+	}
 	
-	public void onClick(View v){
-				
+	public void onClick(View v){		
 		switch(v.getId()){
 		case R.id.start_adventure_button:
 			startAdventureButtonClicked(v);
@@ -67,13 +101,14 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		}
 		
 	}
+	
 	private void stopAdventureButtonClicked(View v) {
 		running = false;
 		toggleUI(running);
 		
 		// got tell our activity that we are running
 		AdventureActivity activity = (AdventureActivity)this.getActivity();
-		activity.setRunning(true);
+		activity.setRunning(false);
 	}
 
 	public void startAdventureButtonClicked(View v){
@@ -81,9 +116,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		String newAdvName = advNameEdit.getText().toString();
 		
 		running = true;
-		if (firstRun){
-			firstRun = false;
-		}
+	
 		toggleUI(running);
 
 		curAdventure  = ((AdventureActivity)this.getActivity()).getCurAdventure();
@@ -91,13 +124,19 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		
 		TextView advTitle = (TextView)rootView.findViewById(R.id.adventure_title);
 		advTitle.setText(newAdvName);
+
+		if (firstRun)
+		{
+			// open the data base
+			dSource.open();
+			// write our adventure to the db before we start recording
+			dSource.addAdventure(curAdventure);
+			dSource.close();	
+		}
 		
-		// open the data base
-		dSource.open();
-		// write our adventure to the db before we start recording
-		dSource.addAdventure(curAdventure);
-		dSource.close();
-		
+		if (firstRun){
+			firstRun = false;
+		}		
 		// got tell our activity that we are running
 		AdventureActivity activity = (AdventureActivity)this.getActivity();
 		activity.setRunning(true);
@@ -105,16 +144,24 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private void updateUI(Adventure adv){
 		TextView text;
-		text = (TextView)rootView.findViewById(R.id.points_collected_view);
+		text = (TextView)rootView.findViewById(R.id.total_points_view);
 		text.setText(adv.getNumGpsPoints().toString());
 	
 		Double area = adv.getAdvArea();
-		text = (TextView)rootView.findViewById(R.id.total_area_view);
+		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setText(area.toString());
 		
 		Double distance = adv.getAdvDistance();
-		text = (TextView)rootView.findViewById(R.id.total_distance_view);
+		text = (TextView)rootView.findViewById(R.id.distance_view);
 		text.setText(distance.toString());
+		
+		Double elevation = adv.getElevationChange();
+		text = (TextView)rootView.findViewById(R.id.elevation_view);
+		text.setText(elevation.toString());
+		
+		Double speed = adv.getAverageSpeed();
+		text = (TextView)rootView.findViewById(R.id.speed_view);
+		text.setText(speed.toString());
 	}
 	
 	// call back for the main adventure activity to update the current adventure
@@ -151,6 +198,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		}
 		else{
 			lastPause = convertToMilli(chrono.getText().toString());
+			curAdventure.setAdvTime(lastPause);
 			Log.i("CHRONO", "setting chronoBase to "+this.lastPause);
 			chrono.stop();
 		}
@@ -162,24 +210,50 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		TextView text = (TextView)rootView.findViewById(R.id.adventure_title);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
-		text = (TextView)rootView.findViewById(R.id.total_area_label);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		ImageView img;
+		img = (ImageView)rootView.findViewById(R.id.area_icon);
+		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
-		text = (TextView)rootView.findViewById(R.id.total_distance_label);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		img = (ImageView)rootView.findViewById(R.id.elevation_icon);
+		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		
+		img = (ImageView)rootView.findViewById(R.id.speed_icon);
+		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		
+		img = (ImageView)rootView.findViewById(R.id.distance_icon);
+		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
 		text = (TextView)rootView.findViewById(R.id.total_points_label);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
 		// the actual values for said labels
-		text = (TextView)rootView.findViewById(R.id.points_collected_view);
+		text = (TextView)rootView.findViewById(R.id.total_points_view);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
-		text = (TextView)rootView.findViewById(R.id.total_area_view);
+		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 		
-		text = (TextView)rootView.findViewById(R.id.total_distance_view);
+		text = (TextView)rootView.findViewById(R.id.distance_view);
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		
+		text = (TextView)rootView.findViewById(R.id.elevation_view);
+		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		
+		text = (TextView)rootView.findViewById(R.id.speed_view);
+		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
+		
+		// lets make the layout and their strokes visable
+		LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.distance_layout);
+		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
+		
+		layout = (LinearLayout)rootView.findViewById(R.id.area_layout);
+		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
+		
+		layout = (LinearLayout)rootView.findViewById(R.id.elevation_layout);
+		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
+		
+		layout = (LinearLayout)rootView.findViewById(R.id.speed_layout);
+		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
 	}
 	
 	// convert a string containing a human readable time into milliseconds
@@ -199,6 +273,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			long seconds = Long.parseLong(split[1]);
 			return (minutes + seconds) * 1000;
 		}
+	}
+	
+	private long convertToSeconds(long milliTime){
+		return milliTime / 1000;
+	
 	}
 
 }
