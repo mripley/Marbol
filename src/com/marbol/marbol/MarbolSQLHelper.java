@@ -18,7 +18,6 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 	public static final String ADVENTURE_ELEVATION = "adventure_elevation";
 	public static final String ADVENTURE_SPEED = "adventure_speed";
 	
-	
 	private static final String DATABASE_NAME = "Marbol.db";
 	private static final int DATABASE_VERSION = 8;
 
