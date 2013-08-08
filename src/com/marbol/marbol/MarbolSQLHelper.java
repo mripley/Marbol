@@ -20,7 +20,7 @@ public class MarbolSQLHelper extends SQLiteOpenHelper{
 	
 	
 	private static final String DATABASE_NAME = "Marbol.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	private static final String CREATE_DB = "create table "
 			+ TABLE_ADVENTURE + "(" + COLUMN_ID +" integer primary key autoincrement, "

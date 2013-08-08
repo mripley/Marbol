@@ -158,8 +158,8 @@ public class AdventureDataSource {
 		}
 		retval.setGpsPoints(points);
 		
-		retval.setElevationChange(c.getDouble(7));
-		retval.setAverageSpeed(c.getDouble(8));
+//		retval.setElevationChange(c.getDouble(7));
+//		retval.setAverageSpeed(c.getDouble(8));
 		return retval;
 	}
 
