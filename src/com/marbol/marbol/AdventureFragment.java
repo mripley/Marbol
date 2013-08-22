@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,11 +46,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		dSource = new AdventureDataSource(this.getActivity());
 		
 		// set the on click listener for the start button
-		Button button = (Button)rootView.findViewById(R.id.start_adventure_button);
+		ImageButton button = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
 		button.setOnClickListener(this);
 		
 		// set the on click listener for the stop button
-		button = (Button)rootView.findViewById(R.id.stop_adventure_button);
+		button = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
 		button.setOnClickListener(this);
 		
 		return rootView;
@@ -76,8 +77,9 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			
 			chrono.setBase(SystemClock.elapsedRealtime() - lastPause);
 			
-			Button stopButton = (Button)rootView.findViewById(R.id.start_adventure_button);
-			stopButton.setText("Resume Adventure");
+			ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
+			//stopButton.setText("Resume Adventure");
+			stopButton.setImageResource(R.drawable.new_adventure_button_sm);
 			stopButton.setVisibility(Button.VISIBLE);
 			
 			updateUI(curAdventure);
@@ -176,17 +178,17 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	public void toggleUI(Boolean running){
 		
-		Button startButton = (Button)rootView.findViewById(R.id.start_adventure_button);
-		Button endButton = (Button)rootView.findViewById(R.id.stop_adventure_button);
+		ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
+		ImageButton endButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
 
 		startButton.setVisibility(running ? Button.INVISIBLE : Button.VISIBLE);
 		startButton.setClickable(!running);
 		
 		// if this isn't our first run update the text to "resume"
-		if (!firstRun){
-			startButton.setText("Resume Adventure");
-		}
-		
+//		if (!firstRun){
+//			startButton.setText("Resume Adventure");
+//		}
+//		
 		endButton.setVisibility(running ? Button.VISIBLE : Button.INVISIBLE);
 		endButton.setClickable(running);
 		

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * Fragment containing the logic to handle the "Map" Fragment
@@ -22,7 +23,7 @@ public class NewAdventureFragment extends Fragment implements View.OnClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.new_adventure_fragment_layout, container, false);
-		Button newAdvButton = (Button)rootView.findViewById(R.id.NewAdventureButtonMain);
+		ImageButton newAdvButton = (ImageButton)rootView.findViewById(R.id.NewAdventureButtonMain);
 		newAdvButton.setOnClickListener(this);
 		
 		return rootView;
