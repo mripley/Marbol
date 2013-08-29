@@ -51,6 +51,8 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		Log.i("UPDATES", "Updating the map");
 		ArrayList<Location> locList = adv.getGpsPoints();
 		Location lastLocation = locList.get(locList.size()-1); // get the last element in the list
+		
+		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 10));
 	}
 }
