@@ -145,6 +145,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	}
 	
 	private void updateUI(Adventure adv){
+		Log.i("UPDATES", "Updating adventure fragment");
 		TextView text;
 		text = (TextView)rootView.findViewById(R.id.total_points_view);
 		text.setText(adv.getNumGpsPoints().toString());
@@ -184,11 +185,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		startButton.setVisibility(running ? Button.INVISIBLE : Button.VISIBLE);
 		startButton.setClickable(!running);
 		
-		// if this isn't our first run update the text to "resume"
-//		if (!firstRun){
-//			startButton.setText("Resume Adventure");
-//		}
-//		
 		endButton.setVisibility(running ? Button.VISIBLE : Button.INVISIBLE);
 		endButton.setClickable(running);
 		

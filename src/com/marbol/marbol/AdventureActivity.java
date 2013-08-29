@@ -221,7 +221,7 @@ public class AdventureActivity extends FragmentActivity implements
 				fragment = new AdventureFragment();
 				break;
 			case 1:
-				fragment = new MapFragment();
+				fragment = new MarbolMapFragment();
 				break;
 			default:
 				fragment = new Fragment();
