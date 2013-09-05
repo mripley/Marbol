@@ -39,6 +39,11 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		super.onActivityCreated(savedInstanceState);
 		mapFragment = (SupportMapFragment) this.getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
 		map = mapFragment.getMap();
+		
+		if (map == null){
+			Log.i("map", "Map is null!");
+		}
+		map.setMyLocationEnabled(true);
 	}
 	
 	public void updateUI(Adventure adv) {
