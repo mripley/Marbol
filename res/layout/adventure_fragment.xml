@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".AdventureActivity$DummySectionFragment" >
+
+    <EditText
+        android:id="@+id/AdventureNameEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="14dp"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center" >
+
+        <requestFocus
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </EditText>
+
+    <TextView
+        android:id="@+id/adventure_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible" />
+
+    <Chronometer
+        android:id="@+id/timer_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp" />
+
+    <ImageButton
+        android:id="@+id/start_adventure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/new_adventure_button_sm" />
+
+    <ImageButton
+        android:id="@+id/stop_adventure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/stop_adventure_button_sm"
+        android:visibility="invisible" />
+
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timer_clock"
+        android:layout_centerHorizontal="true"
+        android:columnCount="2"
+        android:rowCount="2" >
+
+        <LinearLayout
+            android:id="@+id/area_layout"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/area_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/area_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/area_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/speed_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/speed_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avg_speed_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/speed_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/distance_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/distance_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/distance_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/distance_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/elevation_layout"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/stroke"
+            android:paddingRight="50dp"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/elevation_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/elevation_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/elevation_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="-1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </GridLayout>
+
+    <SeekBar
+        android:id="@+id/unlockSlider"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/start_adventure_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:maxHeight="100dp"
+        android:thumb="@drawable/stop_adventure_button_slider"
+        android:visibility="invisible"
+        android:progressDrawable="@drawable/slider_background_style"
+        android:background="@drawable/slider_background"
+        />
+
+</RelativeLayout>
