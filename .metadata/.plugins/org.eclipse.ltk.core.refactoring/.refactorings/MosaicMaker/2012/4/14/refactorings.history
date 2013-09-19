@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;mosaicmaker.ReplacementImage&apos; to &apos;ReplacementBlock&apos;&#x0A;- Original project: &apos;MosaicMaker&apos;&#x0A;- Original element: &apos;mosaicmaker.ReplacementImage&apos;&#x0A;- Renamed element: &apos;mosaicmaker.ReplacementBlock&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ReplacementImage&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;mosaicmaker{ReplacementImage.java[ReplacementImage" matchStrategy="1" name="ReplacementBlock" qualified="false" references="true" similarDeclarations="false" stamp="1333645721193" textual="false" version="1.0"/>
-</session>
