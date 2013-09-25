@@ -133,12 +133,21 @@ public class AdventureActivity extends FragmentActivity implements
 				// go get the most up to date location
 				curLocation = locationListener.getLocation();
 				
+				// if the location is null try and use the cached location
+				if (curLocation == null) {
+					curLocation = findNearestLocation();
+					Log.i("WARNING", "Location is null attemping to used cached location ");
+				}
+				
 				if (curAdventure == null){
 					Log.i("ERROR", "Cowardly refusing to update due to null cur adventure");
 					this.start();
 					return;
 				}
+				
+				// if it is still null then don't do anything and restart the cound down
 				if (curLocation == null){
+					
 					Log.i("ERROR", "Cowardly refusing to update due to null location ");
 					this.start();
 					return;
@@ -272,6 +281,31 @@ public class AdventureActivity extends FragmentActivity implements
 			dSource.close();
 		}
 		
+	}
+	
+	// in the event that we can't get a location from the GPS or our location has changed loop over
+	// all location providers and try to provide a "best guess"
+	private Location findNearestLocation()
+	{
+		Location bestLocation = null;
+		List<String> providers = locationManager.getAllProviders();
+		
+		for (String provider : providers)
+		{
+			Location lastLocation = locationManager.getLastKnownLocation(provider);
+
+			if (lastLocation != null && bestLocation != null)
+			{
+				// use the most accurate location we have
+				bestLocation = bestLocation.getAccuracy() > lastLocation.getAccuracy() ? bestLocation : lastLocation;
+				
+			}
+			else if (bestLocation == null && lastLocation != null)
+			{
+				bestLocation = lastLocation;
+			}
+		}
+		return bestLocation;
 	}
 	
 }

@@ -85,7 +85,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
+				// reset the progress bar if the user didn't unlock us all the way
+				if (seekBar.getProgress() != 255)
+				{
+					seekBar.setProgress(0);	
+				}
 				
 			}
 			

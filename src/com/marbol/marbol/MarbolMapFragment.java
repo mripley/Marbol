@@ -2,12 +2,16 @@ package com.marbol.marbol;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +26,7 @@ import android.view.ViewGroup;
 public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 	private GoogleMap map;
 	private SupportMapFragment mapFragment;
+	
 	public MarbolMapFragment() {
 		Log.i("Map", "Map fragment created");
 	}
@@ -42,7 +47,6 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		if (map == null){
 			Log.i("map", "Map is null!");
 		}
-		//map.setMyLocationEnabled(true);
 	}
 	
 	public void updateUI(Adventure adv) {
@@ -55,8 +59,31 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		Log.i("UPDATES", "Updating the map");
 		ArrayList<Location> locList = adv.getGpsPoints();
 		Location lastLocation = locList.get(locList.size()-1); // get the last element in the list
+		LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 		
 		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 10));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(),
+				lastLocation.getLongitude()), 13));
+		
+		// if we have more than 2 points draw a line
+		if (locList.size() > 2)
+		{
+			PolylineOptions lineOptions = new PolylineOptions();
+			List<LatLng> latLongList = new ArrayList<LatLng>();
+			
+			// convert to a list of latlongs
+			for (Location l : locList)
+			{
+				latLongList.add(new LatLng(l.getLatitude(), l.getLongitude()));
+			}
+			
+			lineOptions.color(Color.GREEN);
+			lineOptions.width(5);
+			map.addPolyline(lineOptions);		
+		}
+		// dump a marker at our last position
+		map.addMarker(new MarkerOptions().position(lastLatLng));
+		
+		
 	}
 }

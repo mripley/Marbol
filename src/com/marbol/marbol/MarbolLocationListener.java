@@ -15,19 +15,18 @@ public class MarbolLocationListener implements LocationListener{
 		}
 	}
 
-	
 	@Override
-	public void onProviderDisabled(String arg0) {
-		Log.i("GPS", "Location unavailable due to GPS provider being disabled");
+	public void onProviderDisabled(String provider) {
+		Log.i("GPS", "Location unavailable due to GPS provider being disabled. Provider: " + provider);
 	}
 
 	@Override
-	public void onProviderEnabled(String arg0) {	
-		Log.i("GPS", "GPS provider enabled");
+	public void onProviderEnabled(String provider) {	
+		Log.i("GPS", "GPS provider enabled " + provider );
 	}
 
 	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 
 	public Location getLocation(){
