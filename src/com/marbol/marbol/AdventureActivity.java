@@ -156,10 +156,7 @@ public class AdventureActivity extends FragmentActivity implements
 				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
 				curAdventure.addGpsPoint(curLocation);
 				
-				// NOTE the fragmentList should only ever contain MarbolUIFragments otherwise explosions happen
-				for (Fragment f : fragmentList){
-					((MarbolUIFragment) f).updateAdventure(curAdventure);
-				}
+				updateAdventures();
 				
 				this.start();
 			}
@@ -181,6 +178,7 @@ public class AdventureActivity extends FragmentActivity implements
 		{
 			fragmentList.add(fragment);	
 		}
+		
 	}
 	
 	@Override
@@ -308,4 +306,12 @@ public class AdventureActivity extends FragmentActivity implements
 		return bestLocation;
 	}
 	
+	private void updateAdventures()
+	{
+		// NOTE the fragmentList should only ever contain MarbolUIFragments otherwise explosions happen
+		for (Fragment f : fragmentList){
+			((MarbolUIFragment) f).updateAdventure(curAdventure);
+		}
+		Log.i("ADVENTURE ACTIVITY", "Updating all fragments");
+	}
 }

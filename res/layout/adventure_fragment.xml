@@ -178,15 +178,16 @@
     <SeekBar
         android:id="@+id/unlockSlider"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="107dp"
         android:layout_alignTop="@+id/start_adventure_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:maxHeight="100dp"
+        android:maxHeight="107dp"
         android:thumb="@drawable/stop_adventure_button_slider"
         android:visibility="invisible"
         android:progressDrawable="@drawable/slider_background_style"
         android:background="@drawable/slider_background"
+        android:thumbOffset="-10dp"
         />
 
 </RelativeLayout>

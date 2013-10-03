@@ -47,6 +47,12 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		if (map == null){
 			Log.i("map", "Map is null!");
 		}
+		AdventureActivity act = (AdventureActivity)(this.getActivity());
+		Adventure curAdventure = act.getCurAdventure();
+		if (curAdventure != null)
+		{
+			updateAdventure(curAdventure);
+		}
 	}
 	
 	public void updateUI(Adventure adv) {
@@ -55,16 +61,22 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 
 	@Override
 	public void updateAdventure(Adventure adv) {
-		// TODO Auto-generated method stub
 		Log.i("UPDATES", "Updating the map");
 		ArrayList<Location> locList = adv.getGpsPoints();
+		
+		// nothing to do. bail out now.
+		if (locList == null || locList.size() == 0)
+		{
+			return;
+		}
+		
 		Location lastLocation = locList.get(locList.size()-1); // get the last element in the list
 		LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 		
 		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(),
 				lastLocation.getLongitude()), 13));
-		
+		Log.i("UPDATES", "Going to draw " + locList.size() + " points");
 		// if we have more than 2 points draw a line
 		if (locList.size() > 2)
 		{
@@ -77,13 +89,12 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 				latLongList.add(new LatLng(l.getLatitude(), l.getLongitude()));
 			}
 			
-			lineOptions.color(Color.GREEN);
-			lineOptions.width(5);
-			map.addPolyline(lineOptions);		
+			lineOptions.color(Color.argb(150, 0, 255, 0));
+			lineOptions.width(10);
+			lineOptions.addAll(latLongList);
+			map.addPolyline(lineOptions);	
 		}
 		// dump a marker at our last position
 		map.addMarker(new MarkerOptions().position(lastLatLng));
-		
-		
 	}
 }
