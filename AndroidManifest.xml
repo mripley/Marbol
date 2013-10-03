@@ -27,7 +27,8 @@
         
         <activity
             android:name="com.marbol.marbol.MarbolMain"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +47,8 @@
         
         <activity
             android:name="com.marbol.marbol.AdventureActivity"
-            android:label="@string/adventure_activity_title" >
+            android:label="@string/adventure_activity_title"
+            android:configChanges="orientation|screenSize" >
         </activity>
 
         <meta-data

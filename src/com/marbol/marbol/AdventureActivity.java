@@ -8,6 +8,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -313,5 +314,10 @@ public class AdventureActivity extends FragmentActivity implements
 			((MarbolUIFragment) f).updateAdventure(curAdventure);
 		}
 		Log.i("ADVENTURE ACTIVITY", "Updating all fragments");
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
 	}
 }
