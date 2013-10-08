@@ -29,7 +29,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private Adventure curAdventure;
 	private AdventureDataSource dSource;
-	private final int invsible = 255;
+	private final int seekBarMax = 255;
 	
 	public AdventureFragment() {
 		curAdventure = null;
@@ -55,17 +55,17 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		// set the on click listener for the stop button
 		final ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button); 
 		stopButton.setOnClickListener(this);
-		stopButton.setColorFilter(Color.argb(invsible, 0,0,0));
+		stopButton.setColorFilter(Color.argb(seekBarMax, 0,0,0));
 		stopButton.setEnabled(false); // until we are unlocked we are disabled
 		
 		final SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
-		unlockBar.setMax(255);
+		unlockBar.setMax(seekBarMax);
 		unlockBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				stopButton.setColorFilter(Color.argb(invsible - progress,0,0,0));
-				if (progress == 255)
+				stopButton.setColorFilter(Color.argb(seekBarMax - progress,0,0,0));
+				if (progress == seekBarMax)
 				{
 					stopButton.setEnabled(true);
 					unlockBar.setVisibility(SeekBar.INVISIBLE);
@@ -86,7 +86,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// reset the progress bar if the user didn't unlock us all the way
-				if (seekBar.getProgress() != 255)
+				if (seekBar.getProgress() != seekBarMax)
 				{
 					seekBar.setProgress(0);	
 				}
@@ -187,7 +187,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		Log.i("UPDATES", "Updating adventure fragment");
 		TextView text;
 	
-		Double area = adv.getAdvArea();
+		Double area = adv.getArea(Adventure.STANDARD_RADIUS);
 		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setText(area.toString());
 		
@@ -235,7 +235,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			
 			// if we are running set the progress bar back to 0 and make the unlock bar invisible again
 			unlockBar.setProgress(0);
-			stopButton.setColorFilter(Color.argb(invsible, 0,0,0));
+			stopButton.setColorFilter(Color.argb(seekBarMax, 0,0,0));
 		}
 		else{
 			lastPause = convertToMilli(chrono.getText().toString());
@@ -290,8 +290,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		layout = (LinearLayout)rootView.findViewById(R.id.speed_layout);
 		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
 		
-		SeekBar unlockSlider = (SeekBar)rootView.findViewById(R.id.unlockSlider);
-		unlockSlider.setVisibility(running ? SeekBar.VISIBLE : SeekBar.INVISIBLE);
+		unlockBar.setVisibility(running ? SeekBar.VISIBLE : SeekBar.INVISIBLE);
 	}
 	
 	// convert a string containing a human readable time into milliseconds

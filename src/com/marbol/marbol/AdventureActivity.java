@@ -170,6 +170,13 @@ public class AdventureActivity extends FragmentActivity implements
 			
 		};
 	}
+
+	
+	@Override
+	public void onDestroy(){
+		// since we are going away stop requesting location updates
+		locationManager.removeUpdates(this.locationListener);
+	}
 	
 	@Override
 	public void onAttachFragment (Fragment fragment) {

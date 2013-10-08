@@ -43,7 +43,7 @@ public class AdventureDataSource {
 		ContentValues values = new ContentValues();
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
 		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getDistanceInMeters());
-		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
+		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getArea(Adventure.STANDARD_RADIUS));
 		
 		// convert our Date to an appropriate string
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
@@ -100,7 +100,7 @@ public class AdventureDataSource {
 		ContentValues values = new ContentValues();
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
 		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getDistanceInMeters());
-		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
+		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getArea(Adventure.STANDARD_RADIUS));
 		
 		// convert our Date to an appropriate string
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
