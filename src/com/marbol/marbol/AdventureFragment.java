@@ -90,10 +90,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 				{
 					seekBar.setProgress(0);	
 				}
-				
 			}
-			
-		
 		});
 		return rootView;
 	}
@@ -194,11 +191,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setText(area.toString());
 		
-		Double distance = adv.getAdvDistance();
+		Double distance = adv.getDistanceInMeters();
 		text = (TextView)rootView.findViewById(R.id.distance_view);
 		text.setText(distance.toString());
 		
-		Double elevation = adv.getElevationChange();
+		Double elevation = adv.getElevationDiff();
 		text = (TextView)rootView.findViewById(R.id.elevation_view);
 		text.setText(elevation.toString());
 		

@@ -43,14 +43,6 @@ public class Adventure {
 		this.advName = advName;
 	}
 
-	public double getAdvDistance() {
-		return advDistance;
-	}
-
-	public void setAdvDistance(double advDistance) {
-		this.advDistance = advDistance;
-	}
-
 	public double getAdvArea() {
 		return advArea;
 	}
@@ -79,10 +71,6 @@ public class Adventure {
 		return gpsPoints;
 	}
 
-	public void setGpsPoints(ArrayList<Location> gpsPoints) {
-		this.gpsPoints = gpsPoints;
-	}
-	
 	public void addGpsPoint(Location curLocation){
 		this.gpsPoints.add(curLocation);
 	}
@@ -99,6 +87,22 @@ public class Adventure {
 		return this.gpsPoints.size();	
 	}
 	
+	public void setGpsPoints(ArrayList<Location> points) {
+		this.gpsPoints = points;
+	}
+
+	public void setAverageSpeed(double avgSpeed) {
+		this.averageSpeed = avgSpeed;
+	}
+
+	public void setAdvDistance(double distance) {
+		this.advDistance = distance;
+	}
+	
+	public void setElevationChange(double elevationChange) {
+		this.elevationChange = elevationChange;
+	}
+	
 	@Override
 	public String toString()
 	{
@@ -106,21 +110,76 @@ public class Adventure {
 		str += " distance: " + this.advDistance + " num GPS points: " + this.gpsPoints.size();
 		return str;
 	}
-
-	public double getElevationChange() {
-		return elevationChange;
-	}
-
-	public void setElevationChange(double elevationChange) {
-		this.elevationChange = elevationChange;
+	
+	// compute the total distance traveled in meters and set the instance variable of this class 
+	public double getDistanceInMeters(){
+		
+		advDistance = 0;
+		
+		if (this.gpsPoints.size() < 2){
+			return advDistance;
+		}
+		
+		Location start = gpsPoints.get(0);
+		Location curEnd;
+		for (int i = 1; i < gpsPoints.size(); i++){
+			curEnd = gpsPoints.get(i);
+			float results[] = new float[1];
+			Location.distanceBetween(start.getLatitude(), start.getLongitude(), curEnd.getLatitude(), curEnd.getLongitude(), results);
+			advDistance += results[0];
+		}
+		return advDistance;
 	}
 	
-	public double getAverageSpeed() {
+	// compute the average speed and set the instance variable of this class
+	public double getAverageSpeed(){
+		averageSpeed = 0;
+		
+		if (this.gpsPoints.size() == 0){
+			return averageSpeed;
+		}
+		
+		for (Location l : gpsPoints){
+			averageSpeed += l.getSpeed();
+		}
+		
+		averageSpeed = averageSpeed / (float)gpsPoints.size();
 		return averageSpeed;
 	}
 
-	public void setAverageSpeed(double averageSpeed) {
-		this.averageSpeed = averageSpeed;
+	// compute the elevation difference and set the variable of the instance class
+	public double getElevationDiff()
+	{
+		elevationChange = 0;
+		double elevationMin = Double.MAX_VALUE;
+		double elevationMax = Double.MIN_NORMAL;
+		
+		if (this.gpsPoints.size() == 0){
+			return this.elevationChange;
+		}
+		
+		for (Location l : gpsPoints){
+			double alt = l.getAltitude();
+			elevationMin = alt < elevationMin ? alt : elevationMin;
+			elevationMax = alt > elevationMax ? alt : elevationMax;
+		}
+		
+		elevationChange = elevationMax - elevationMin;
+		return elevationChange;
 	}
-
+	
+	// compute the total area and set the instance variable of this class
+	// @param radius the radius of the view in meters
+	public double getArea(double radius){
+		advArea = 0;
+		
+		double length = this.getDistanceInMeters();
+		
+		// compute the "rectangular" part of the path
+		advArea = length * (2 * radius);
+		
+		// add on the "end caps" 
+		advArea += Math.PI * (radius * radius);
+		return advArea;
+	}
 }

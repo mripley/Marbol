@@ -42,7 +42,7 @@ public class AdventureDataSource {
 	public Adventure addAdventure(Adventure adv){
 		ContentValues values = new ContentValues();
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
-		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getAdvDistance());
+		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getDistanceInMeters());
 		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
 		
 		// convert our Date to an appropriate string
@@ -60,7 +60,7 @@ public class AdventureDataSource {
 		}
 	
 		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
-		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationChange());
+		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationDiff());
 		values.put(MarbolSQLHelper.ADVENTURE_SPEED, adv.getAverageSpeed());
 		
 		long rowID = db.insert(MarbolSQLHelper.TABLE_ADVENTURE, null, values);
@@ -99,7 +99,7 @@ public class AdventureDataSource {
 	public void updateAdventure(Adventure adv){
 		ContentValues values = new ContentValues();
 		values.put(MarbolSQLHelper.ADVENTURE_NAME, adv.getAdvName());
-		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getAdvDistance());
+		values.put(MarbolSQLHelper.ADVENTURE_DISTANCE, adv.getDistanceInMeters());
 		values.put(MarbolSQLHelper.ADVENTURE_AREA, adv.getAdvArea());
 		
 		// convert our Date to an appropriate string
@@ -116,7 +116,7 @@ public class AdventureDataSource {
 		}
 	
 		values.put(MarbolSQLHelper.ADVENTURE_GPS_POINTS, points);
-		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationChange());
+		values.put(MarbolSQLHelper.ADVENTURE_ELEVATION, adv.getElevationDiff());
 		values.put(MarbolSQLHelper.ADVENTURE_SPEED, adv.getAverageSpeed());
 		
 		db.update(MarbolSQLHelper.TABLE_ADVENTURE, values, 

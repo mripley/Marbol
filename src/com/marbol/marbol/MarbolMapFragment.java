@@ -54,10 +54,6 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 			updateAdventure(curAdventure);
 		}
 	}
-	
-	public void updateUI(Adventure adv) {
-
-	}
 
 	@Override
 	public void updateAdventure(Adventure adv) {
