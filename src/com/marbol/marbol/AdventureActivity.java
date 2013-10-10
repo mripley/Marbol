@@ -165,7 +165,6 @@ public class AdventureActivity extends FragmentActivity implements
 			@Override
 			public void onTick(long milliUntilFinished) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 		};
@@ -174,6 +173,7 @@ public class AdventureActivity extends FragmentActivity implements
 	
 	@Override
 	public void onDestroy(){
+		super.onDestroy();
 		// since we are going away stop requesting location updates
 		locationManager.removeUpdates(this.locationListener);
 	}
@@ -186,7 +186,6 @@ public class AdventureActivity extends FragmentActivity implements
 		{
 			fragmentList.add(fragment);	
 		}
-		
 	}
 	
 	@Override
