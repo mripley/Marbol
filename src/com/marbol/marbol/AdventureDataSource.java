@@ -55,7 +55,7 @@ public class AdventureDataSource {
 		if(adv.getGpsPoints().size() > 0){
 			// convert the arraylist of points into a single string to stuff into the DB 
 			for(Location l : adv.getGpsPoints()){
-				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+":";
+				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+","+l.getSpeed()+":";
 			}
 		}
 	
@@ -111,7 +111,7 @@ public class AdventureDataSource {
 		if(adv.getGpsPoints().size() > 0){
 			// convert the array list of points into a single string to stuff into the DB 
 			for(Location l : adv.getGpsPoints()){
-				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+":";
+				points += l.getLongitude()+","+l.getLatitude()+","+l.getAltitude()+","+l.getSpeed()+":";
 			}
 		}
 	
@@ -156,6 +156,7 @@ public class AdventureDataSource {
 				l.setLongitude(Double.parseDouble(splitLocation[0]));
 				l.setLatitude(Double.parseDouble(splitLocation[1]));
 				l.setAltitude(Double.parseDouble(splitLocation[2]));
+				l.setSpeed(Float.parseFloat(splitLocation[3]));
 				points.add(l);
 			}
 			retval.setGpsPoints(points);

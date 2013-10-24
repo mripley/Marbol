@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -21,6 +22,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 
 public class AdventureActivity extends FragmentActivity implements
@@ -54,7 +56,7 @@ public class AdventureActivity extends FragmentActivity implements
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_adventure);
 		Log.i("INFO", "Adventure Activity on create called");
@@ -271,6 +273,7 @@ public class AdventureActivity extends FragmentActivity implements
 	public void setRunning(boolean running) {
 		// start the countdown timer
 		if (running){
+			this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
 			timer.start();
 		}
 		else{
@@ -325,5 +328,18 @@ public class AdventureActivity extends FragmentActivity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){		
+		switch(item.getItemId()){
+		case R.id.action_settings:
+			// launch the settings activity
+			Intent settingsIntent = new Intent(this, SettingsActivity.class);
+			startActivity(settingsIntent);
+			return true;
+		}
+		
+		return false;
 	}
 }

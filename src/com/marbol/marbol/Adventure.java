@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 import android.location.Location;
+import android.util.Log;
 
 public class Adventure {
 
@@ -111,7 +112,6 @@ public class Adventure {
 	
 	// compute the total distance traveled in meters and set the instance variable of this class 
 	public double getDistanceInMeters(){
-		
 		advDistance = 0;
 		
 		if (this.gpsPoints.size() < 2){
@@ -124,7 +124,7 @@ public class Adventure {
 			curEnd = gpsPoints.get(i);
 			float results[] = new float[1];
 			Location.distanceBetween(start.getLatitude(), start.getLongitude(), curEnd.getLatitude(), curEnd.getLongitude(), results);
-			advDistance += results[0];
+			advDistance += results[0] / 1000.0;
 		}
 		return advDistance;
 	}
@@ -139,9 +139,10 @@ public class Adventure {
 		
 		for (Location l : gpsPoints){
 			averageSpeed += l.getSpeed();
+			Log.i("SPEED", "Average sum = " + averageSpeed);
 		}
-		
-		averageSpeed = averageSpeed / (float)gpsPoints.size();
+		// convert to kph 
+		averageSpeed = (averageSpeed / (double)gpsPoints.size()) / 1000.0;
 		return averageSpeed;
 	}
 
@@ -161,7 +162,6 @@ public class Adventure {
 			elevationMin = alt < elevationMin ? alt : elevationMin;
 			elevationMax = alt > elevationMax ? alt : elevationMax;
 		}
-		
 		elevationChange = elevationMax - elevationMin;
 		return elevationChange;
 	}
@@ -174,10 +174,11 @@ public class Adventure {
 		double length = this.getDistanceInMeters();
 		
 		// compute the "rectangular" part of the path
-		advArea = length * (2 * radius);
-		
+		advArea = length * (2 * radius) / 1000000;
+		Log.i("COMPUTE", "Adventure area = " + advArea);
 		// add on the "end caps" 
-		advArea += Math.PI * (radius * radius);
+		// convert back to square kilometers
+		advArea += (Math.PI * (radius * radius)) / 1000000;
 		return advArea;
 	}
 }

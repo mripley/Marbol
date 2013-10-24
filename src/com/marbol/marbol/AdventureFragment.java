@@ -189,19 +189,20 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 		Double area = adv.getArea(Adventure.STANDARD_RADIUS);
 		text = (TextView)rootView.findViewById(R.id.area_view);
-		text.setText(area.toString());
+		text.setText(String.format("%.1f", area));
 		
 		Double distance = adv.getDistanceInMeters();
 		text = (TextView)rootView.findViewById(R.id.distance_view);
-		text.setText(distance.toString());
+		text.setText(String.format("%.1f", distance));
 		
 		Double elevation = adv.getElevationDiff();
 		text = (TextView)rootView.findViewById(R.id.elevation_view);
-		text.setText(elevation.toString());
+		text.setText(String.format("%.1f", elevation));
 		
 		Double speed = adv.getAverageSpeed();
 		text = (TextView)rootView.findViewById(R.id.speed_view);
-		text.setText(speed.toString());
+		text.setText(String.format("%.1f", speed));
+		Log.i("SPEED", "Speed is " + speed);
 	}
 	
 	// call back for the main adventure activity to update the current adventure

@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/area_view"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="-1"
@@ -115,7 +115,7 @@
 
             <TextView
                 android:id="@+id/speed_view"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="-1"
@@ -140,7 +140,7 @@
 
             <TextView
                 android:id="@+id/distance_view"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="-1"
@@ -165,7 +165,7 @@
 
             <TextView
                 android:id="@+id/elevation_view"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="-1"
