@@ -8,4 +8,11 @@
             android:key="gpsPollTime" android:defaultValue="30"
             android:entries="@array/gpsPollTime" android:entryValues="@array/gpsPollTimeVal"/>
     </PreferenceCategory>
+    
+   <PreferenceCategory android:title="Units / Display">
+        <ListPreference android:title="Units"
+            android:summary="Units to be used"
+            android:key="units" android:defaultValue="0"
+            android:entries="@array/units" android:entryValues="@array/unitsValue"/>
+    </PreferenceCategory>
 </PreferenceScreen>

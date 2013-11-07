@@ -1,8 +1,10 @@
 package com.marbol.marbol;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	private Adventure curAdventure;
 	private AdventureDataSource dSource;
 	private final int seekBarMax = 255;
+	private MarbolUnitConverter conv;
+	
+	private SharedPreferences prefs;
+	private int converterType;
+
 	
 	public AdventureFragment() {
 		curAdventure = null;
@@ -37,9 +44,28 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		running = false;
 		firstRun = true;
 		lastPause = 0;
+		conv = new MetricConverter();
+		converterType = 0;
+		
 		Log.i("Adventure", "Adventure Fragment created!");
 	}
 
+	private MarbolUnitConverter getConverter() {
+		if (prefs == null){
+			prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+		}
+		
+		switch(Integer.parseInt(prefs.getString("units", "0"))){
+			case 0:
+				return new MetricConverter();
+			case 1:
+				return new ImperialConverter();
+			default:
+				Log.i("ERROR", "Unrecognized converter type");
+				return null;
+		}
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -127,6 +153,8 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		{
 			firstRun = true;
 		}
+		
+		conv = getConverter();
 	}
 	
 	public void onClick(View v){		
@@ -185,24 +213,22 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private void updateUI(Adventure adv){
 		Log.i("UPDATES", "Updating adventure fragment");
+		conv = getConverter();
 		TextView text;
-	
-		Double area = adv.getArea(Adventure.STANDARD_RADIUS);
+		
+		double[] data = conv.convert(adv);
+		
 		text = (TextView)rootView.findViewById(R.id.area_view);
-		text.setText(String.format("%.1f", area));
+		text.setText(String.format("%.1f", data[0]));
 		
-		Double distance = adv.getDistanceInMeters();
 		text = (TextView)rootView.findViewById(R.id.distance_view);
-		text.setText(String.format("%.1f", distance));
+		text.setText(String.format("%.1f", data[3]));
 		
-		Double elevation = adv.getElevationDiff();
 		text = (TextView)rootView.findViewById(R.id.elevation_view);
-		text.setText(String.format("%.1f", elevation));
+		text.setText(String.format("%.1f", data[2]));
 		
-		Double speed = adv.getAverageSpeed();
 		text = (TextView)rootView.findViewById(R.id.speed_view);
-		text.setText(String.format("%.1f", speed));
-		Log.i("SPEED", "Speed is " + speed);
+		text.setText(String.format("%.1f", data[1]));
 	}
 	
 	// call back for the main adventure activity to update the current adventure

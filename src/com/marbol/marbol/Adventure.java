@@ -124,12 +124,12 @@ public class Adventure {
 			curEnd = gpsPoints.get(i);
 			float results[] = new float[1];
 			Location.distanceBetween(start.getLatitude(), start.getLongitude(), curEnd.getLatitude(), curEnd.getLongitude(), results);
-			advDistance += results[0] / 1000.0;
+			advDistance += results[0];
 		}
 		return advDistance;
 	}
 	
-	// compute the average speed and set the instance variable of this class
+	// compute the average speed in m/s and set the instance variable of this class
 	public double getAverageSpeed(){
 		averageSpeed = 0;
 		
@@ -139,10 +139,9 @@ public class Adventure {
 		
 		for (Location l : gpsPoints){
 			averageSpeed += l.getSpeed();
-			Log.i("SPEED", "Average sum = " + averageSpeed);
 		}
 		// convert to kph 
-		averageSpeed = (averageSpeed / (double)gpsPoints.size()) / 1000.0;
+		averageSpeed = (averageSpeed / (double)gpsPoints.size());
 		return averageSpeed;
 	}
 
@@ -175,7 +174,6 @@ public class Adventure {
 		
 		// compute the "rectangular" part of the path
 		advArea = length * (2 * radius) / 1000000;
-		Log.i("COMPUTE", "Adventure area = " + advArea);
 		// add on the "end caps" 
 		// convert back to square kilometers
 		advArea += (Math.PI * (radius * radius)) / 1000000;
