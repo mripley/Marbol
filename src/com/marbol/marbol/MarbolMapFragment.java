@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -92,5 +93,11 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		}
 		// dump a marker at our last position
 		map.addMarker(new MarkerOptions().position(lastLatLng));
+	}
+
+	@Override
+	public void orientationChange(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		
 	}
 }

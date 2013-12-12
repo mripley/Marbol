@@ -1,6 +1,7 @@
 package com.marbol.marbol;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -10,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -341,7 +344,41 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private long convertToSeconds(long milliTime){
 		return milliTime / 1000;
-	
+	}
+
+	@Override
+	public void orientationChange(Configuration newConfig) {
+
+		SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
+		ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
+		ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
+
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+			unlockBar.setTranslationX(500);
+			unlockBar.setTranslationY(-120);
+			unlockBar.setRotation(90);
+			
+			startButton.setTranslationX(500);
+			startButton.setTranslationY(-120);
+
+			stopButton.setTranslationX(500);
+			stopButton.setTranslationY(-120);
+
+		}
+		else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+			unlockBar.setTranslationX(0);
+			unlockBar.setTranslationY(0);
+			unlockBar.setRotation(0);
+			
+			startButton.setTranslationX(0);
+			startButton.setTranslationY(0);
+
+			stopButton.setTranslationX(0);
+			stopButton.setTranslationY(0);
+
+		}
+		
 	}
 
 }

@@ -328,6 +328,9 @@ public class AdventureActivity extends FragmentActivity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
+	    for (Fragment f: fragmentList) {
+	    	((MarbolUIFragment)f).orientationChange(newConfig);
+	    }
 	}
 	
 	@Override
