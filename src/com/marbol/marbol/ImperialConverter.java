@@ -29,8 +29,7 @@ public class ImperialConverter implements MarbolUnitConverter {
 		units.put("elevation_unit", "ft");
 		units.put("speed_unit", "ft/s");
 		
-		// TODO Auto-generated method stub
-		return null;
+		return units;
 	}
 	
 }

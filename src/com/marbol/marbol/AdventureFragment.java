@@ -224,6 +224,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		HashMap<String, String> units = conv.getUnit();
 		
 		double[] data = conv.convert(adv);
+		if (data == null) {
+			
+			Log.i("ERROR", "my data is null!");
+		}
 		
 		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setText(String.format("%.1f" + units.get("area_unit"), data[0]));
