@@ -18,7 +18,8 @@
         android:layout_marginLeft="14dp"
         android:ems="10"
         android:textColor="#FFFFFF"
-        android:textAlignment="center" >
+        android:textAlignment="center"
+        android:inputType="text" >
 
         <requestFocus
             android:layout_width="wrap_content"
@@ -51,7 +52,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
-        android:src="@drawable/new_adventure_button_sm" />
+        android:src="@drawable/new_adventure_button_sm"
+        android:contentDescription="@string/start_adv_desc" />
 
     <ImageButton
         android:id="@+id/stop_adventure_button"
@@ -61,7 +63,8 @@
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
         android:src="@drawable/stop_adventure_button_sm"
-        android:visibility="invisible" />
+        android:visibility="invisible" 
+        android:contentDescription="@string/stop_adv_desc"/>
 
     <GridLayout
         android:id="@+id/gridLayout1"

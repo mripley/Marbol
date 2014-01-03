@@ -15,5 +15,7 @@
     <string name="distance_icon_desc">Distance Icon</string>
     <string name="area_icon_desc">Area Icon</string>
     <string name="elevation_icon_desc">Elevation Icon</string>
+    <string name="start_adv_desc">Start Adventure Button</string>
+    <string name="stop_adv_desc">Stop Adventure Button</string>
 
 </resources>
