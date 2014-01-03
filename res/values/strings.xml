@@ -10,5 +10,10 @@
     <string name="area_label_string">Total Area:</string>
     <string name="history_section">History</string>
     <string name="adventure_activity_title">Adventure</string>
+    <string name="default_stats">0.0</string>
+    <string name="speed_icon_desc">Speed Icon</string>
+    <string name="distance_icon_desc">Distance Icon</string>
+    <string name="area_icon_desc">Area Icon</string>
+    <string name="elevation_icon_desc">Elevation Icon</string>
 
 </resources>

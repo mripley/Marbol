@@ -19,7 +19,7 @@ public class Adventure {
 	private double elevationChange;
 	private double averageSpeed;
 
-	public static final double STANDARD_RADIUS = 8046.72;
+	public static final double STANDARD_RADIUS = 402.336;
 	
 	public Adventure(String name, double distance, double area, Date date){
 		this.advName = name;

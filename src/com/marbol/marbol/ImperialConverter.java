@@ -1,5 +1,7 @@
 package com.marbol.marbol;
 
+import java.util.HashMap;
+
 public class ImperialConverter implements MarbolUnitConverter {
 
 	private static final double km2tomi2 = 0.386102;
@@ -16,6 +18,19 @@ public class ImperialConverter implements MarbolUnitConverter {
 		retval[2] = adv.getElevationDiff() * mtoft;
 		retval[3] = (adv.getDistanceInMeters() * mtoft) / 5280;
 		return retval;
+	}
+
+	@Override
+	public HashMap<String, String> getUnit() {
+		
+		HashMap<String, String> units = new HashMap<String, String>();
+		units.put("area_unit", "mi\u00b2");
+		units.put("distance_unit", "mi");
+		units.put("elevation_unit", "ft");
+		units.put("speed_unit", "ft/s");
+		
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -51,6 +51,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		
 		// set a default zoom level
 		map.moveCamera(CameraUpdateFactory.zoomTo(10));
+		
 		AdventureActivity act = (AdventureActivity)(this.getActivity());
 		Adventure curAdventure = act.getCurAdventure();
 		if (curAdventure != null)

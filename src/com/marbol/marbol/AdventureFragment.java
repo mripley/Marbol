@@ -1,5 +1,7 @@
 package com.marbol.marbol;
 
+import java.util.HashMap;
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -218,20 +220,22 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		Log.i("UPDATES", "Updating adventure fragment");
 		conv = getConverter();
 		TextView text;
+		String unit = "";
+		HashMap<String, String> units = conv.getUnit();
 		
 		double[] data = conv.convert(adv);
 		
 		text = (TextView)rootView.findViewById(R.id.area_view);
-		text.setText(String.format("%.1f", data[0]));
+		text.setText(String.format("%.1f" + units.get("area_unit"), data[0]));
 		
 		text = (TextView)rootView.findViewById(R.id.distance_view);
-		text.setText(String.format("%.1f", data[3]));
+		text.setText(String.format("%.1f" + units.get("distance_unit"), data[3]));
 		
 		text = (TextView)rootView.findViewById(R.id.elevation_view);
-		text.setText(String.format("%.1f", data[2]));
+		text.setText(String.format("%.1f" + units.get("elevation_unit"), data[2]));
 		
 		text = (TextView)rootView.findViewById(R.id.speed_view);
-		text.setText(String.format("%.1f", data[1]));
+		text.setText(String.format("%.1f" + units.get("speed_unit"), data[1]));
 	}
 	
 	// call back for the main adventure activity to update the current adventure
