@@ -105,13 +105,11 @@ public class MarbolMain extends FragmentActivity implements
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-								FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-								FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	/**

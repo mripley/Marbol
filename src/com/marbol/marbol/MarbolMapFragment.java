@@ -48,6 +48,9 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		if (map == null){
 			Log.i("map", "Map is null!");
 		}
+		
+		// set a default zoom level
+		map.moveCamera(CameraUpdateFactory.zoomTo(10));
 		AdventureActivity act = (AdventureActivity)(this.getActivity());
 		Adventure curAdventure = act.getCurAdventure();
 		if (curAdventure != null)
@@ -71,8 +74,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 		
 		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(),
-				lastLocation.getLongitude()), 13));
+		map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())));
 		Log.i("UPDATES", "Going to draw " + locList.size() + " points");
 		// if we have more than 2 points draw a line
 		if (locList.size() > 2)

@@ -353,8 +353,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
 		ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
 
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			unlockBar.setTranslationX(500);
 			unlockBar.setTranslationY(-120);
 			unlockBar.setRotation(90);
@@ -364,9 +363,8 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 
 			stopButton.setTranslationX(500);
 			stopButton.setTranslationY(-120);
-
 		}
-		else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+		else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 			unlockBar.setTranslationX(0);
 			unlockBar.setTranslationY(0);
 			unlockBar.setRotation(0);
@@ -376,9 +374,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 
 			stopButton.setTranslationX(0);
 			stopButton.setTranslationY(0);
-
-		}
-		
+		}	
 	}
-
 }

@@ -79,8 +79,7 @@ public class AdventureActivity extends FragmentActivity implements
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager
-				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 					@Override
 					public void onPageSelected(int position) {
 						actionBar.setSelectedNavigationItem(position);
@@ -142,16 +141,8 @@ public class AdventureActivity extends FragmentActivity implements
 					Log.i("WARNING", "Location is null attemping to used cached location ");
 				}
 				
-				if (curAdventure == null){
+				if (curAdventure == null || curLocation == null){
 					Log.i("ERROR", "Cowardly refusing to update due to null cur adventure");
-					this.start();
-					return;
-				}
-				
-				// if it is still null then don't do anything and restart the cound down
-				if (curLocation == null){
-					
-					Log.i("ERROR", "Cowardly refusing to update due to null location ");
 					this.start();
 					return;
 				}
@@ -160,7 +151,6 @@ public class AdventureActivity extends FragmentActivity implements
 				curAdventure.addGpsPoint(curLocation);
 				
 				updateAdventures();
-				
 				this.start();
 			}
 
