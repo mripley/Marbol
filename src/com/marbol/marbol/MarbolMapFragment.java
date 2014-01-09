@@ -64,7 +64,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 	public void updateAdventure(Adventure adv) {
 		Log.i("UPDATES", "Updating the map");
 		ArrayList<Location> locList = adv.getGpsPoints();
-		
+		map.clear();
 		// nothing to do. bail out now.
 		if (locList == null || locList.size() == 0)
 		{
@@ -72,7 +72,9 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		}
 		
 		Location lastLocation = locList.get(locList.size()-1); // get the last element in the list
+		Location firstLocation = locList.get(0);
 		LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+		LatLng firstLatLng = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
 		
 		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
 		map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())));
@@ -94,8 +96,11 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 			lineOptions.addAll(latLongList);
 			map.addPolyline(lineOptions);	
 		}
+		// put a marker at teh first location we've sampled
+		map.addMarker(new MarkerOptions().position(firstLatLng).title("Start"));
+		
 		// dump a marker at our last position
-		map.addMarker(new MarkerOptions().position(lastLatLng));
+		map.addMarker(new MarkerOptions().position(lastLatLng).title("Last"));
 	}
 
 	@Override

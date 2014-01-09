@@ -41,7 +41,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private SharedPreferences prefs;
 	private int converterType;
-
 	
 	public AdventureFragment() {
 		curAdventure = null;

@@ -38,6 +38,7 @@ public class AdventureActivity extends FragmentActivity implements
 	private LocationManager locationManager;
 	private boolean newAdventure;
 	private List<Fragment> fragmentList;
+	private long curID; 
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -59,7 +60,9 @@ public class AdventureActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_adventure);
+		
 		Log.i("INFO", "Adventure Activity on create called");
+		
 		// get the preference and the gps poll time
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
@@ -108,7 +111,7 @@ public class AdventureActivity extends FragmentActivity implements
 		dSource.open();
 		savedInstanceState = getIntent().getExtras();
 		if (savedInstanceState != null){
-			long curID = savedInstanceState.getLong("com.marbol.marbol.curAdventure", -1 );
+			curID = savedInstanceState.getLong("com.marbol.marbol.curAdventure", -1 );
 			if (curID == -1){
 				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
@@ -162,6 +165,10 @@ public class AdventureActivity extends FragmentActivity implements
 		};
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		savedInstanceState.putLong("curAdvID", curID);
+	}
 	
 	@Override
 	public void onDestroy(){
