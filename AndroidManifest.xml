@@ -41,13 +41,13 @@
             android:launchMode="standard"
             android:multiprocess="true"
             android:screenOrientation="unspecified"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme" android:parentActivityName="com.marbol.marbol.MarbolMain">
         </activity>
         
         <activity
             android:name="com.marbol.marbol.AdventureActivity"
             android:label="@string/adventure_activity_title"
-            android:configChanges="orientation|screenSize" >
+            android:configChanges="orientation|screenSize" android:parentActivityName="com.marbol.marbol.MarbolMain">
         </activity>
 
         <meta-data
