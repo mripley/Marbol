@@ -89,7 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/area_icon_desc"
-                android:src="@drawable/area_icon" />
+                android:src="@drawable/area_icon"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/area_view"
@@ -188,11 +189,11 @@
         android:layout_alignTop="@+id/start_adventure_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:background="@drawable/slider_background"
+        android:background="@drawable/slider_background_blue"
         android:maxHeight="107dp"
         android:progressDrawable="@drawable/slider_background_style"
-        android:thumb="@drawable/stop_adventure_button_slider"
-        android:thumbOffset="-10dp"
+        android:thumb="@drawable/unlock_slider_button"
+        
         android:visibility="invisible" />
 
 </RelativeLayout>
