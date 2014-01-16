@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.marbol.marbol.Adventure;
+import com.marbol.marbol.MarbolSQLHelper;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

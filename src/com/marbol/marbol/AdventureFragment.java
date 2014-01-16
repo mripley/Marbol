@@ -288,45 +288,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		TextView text = (TextView)rootView.findViewById(R.id.adventure_title);
 		text.setText(adventureEdit.getText());
 		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		ImageView img;
-		img = (ImageView)rootView.findViewById(R.id.area_icon);
-		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		img = (ImageView)rootView.findViewById(R.id.elevation_icon);
-		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		img = (ImageView)rootView.findViewById(R.id.speed_icon);
-		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		img = (ImageView)rootView.findViewById(R.id.distance_icon);
-		img.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 				
-		text = (TextView)rootView.findViewById(R.id.area_view);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		text = (TextView)rootView.findViewById(R.id.distance_view);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		text = (TextView)rootView.findViewById(R.id.elevation_view);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		text = (TextView)rootView.findViewById(R.id.speed_view);
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
-		
-		// lets make the layout and their strokes visible
-		LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.distance_layout);
-		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
-		
-		layout = (LinearLayout)rootView.findViewById(R.id.area_layout);
-		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
-		
-		layout = (LinearLayout)rootView.findViewById(R.id.elevation_layout);
-		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
-		
-		layout = (LinearLayout)rootView.findViewById(R.id.speed_layout);
-		layout.setVisibility(running ? LinearLayout.VISIBLE : LinearLayout.INVISIBLE);
-		
 		unlockBar.setVisibility(running ? SeekBar.VISIBLE : SeekBar.INVISIBLE);
 	}
 	
