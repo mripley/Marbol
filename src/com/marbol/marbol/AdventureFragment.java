@@ -172,7 +172,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		default:
 			Log.e("UI", "Spurrious button click");
 		}
-		
 	}
 	
 	private void stopAdventureButtonClicked(View v) {

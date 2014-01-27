@@ -125,6 +125,7 @@ public class Adventure {
 			float results[] = new float[1];
 			Location.distanceBetween(start.getLatitude(), start.getLongitude(), curEnd.getLatitude(), curEnd.getLongitude(), results);
 			advDistance += results[0];
+			start = curEnd;
 		}
 		return advDistance;
 	}

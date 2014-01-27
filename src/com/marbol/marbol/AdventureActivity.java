@@ -39,6 +39,8 @@ public class AdventureActivity extends FragmentActivity implements
 	private boolean newAdventure;
 	private List<Fragment> fragmentList;
 	private long curID; 
+	private final int numFragments = 2;
+	private boolean running = false;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -59,10 +61,16 @@ public class AdventureActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_adventure);
 		
 		Log.i("INFO", "Adventure Activity on create called");
-	    
+		if (savedInstanceState != null){
+			running = savedInstanceState.getBoolean("com.marbol.marbol.isRunning", false);
+		}
+		
+		dSource = new AdventureDataSource(this);
+		
 		// get the preference and the gps poll time
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
@@ -84,13 +92,12 @@ public class AdventureActivity extends FragmentActivity implements
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
 
-		dSource = new AdventureDataSource(this);
 		
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -161,14 +168,19 @@ public class AdventureActivity extends FragmentActivity implements
 			@Override
 			public void onTick(long milliUntilFinished) {
 				// TODO Auto-generated method stub
-			}
-			
+			}	
 		};
+		
+		if (running){
+			timer.start();
+			
+		}
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		savedInstanceState.putLong("curAdvID", curID);
+		savedInstanceState.putBoolean("isRunning", running);
 	}
 	
 	@Override
@@ -243,7 +255,7 @@ public class AdventureActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 2 total pages.
-			return 2;
+			return numFragments;
 		}
 
 		@Override
@@ -273,9 +285,11 @@ public class AdventureActivity extends FragmentActivity implements
 		if (running){
 			this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
 			timer.start();
+			running = true;
 		}
 		else{
 			timer.cancel();
+			running = false;
 		}
 		
 		// sync the current adventure with the database
