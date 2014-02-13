@@ -90,6 +90,7 @@ public class AdventureDataSource {
 		if(cursor != null){
 			cursor.moveToFirst();
 		}
+		
 		return cursor;
 	}
 	

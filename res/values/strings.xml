@@ -17,5 +17,6 @@
     <string name="elevation_icon_desc">Elevation Icon</string>
     <string name="start_adv_desc">Start Adventure Button</string>
     <string name="stop_adv_desc">Stop Adventure Button</string>
+    <string name="pause_btn_desc">Pause Button</string>
 
 </resources>

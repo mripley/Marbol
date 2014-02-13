@@ -79,8 +79,13 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		dSource = new AdventureDataSource(this.getActivity());
 		
 		// set the on click listener for the start button
-		ImageButton button = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
-		button.setOnClickListener(this);
+		ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
+		startButton.setOnClickListener(this);
+		
+		final ImageButton pauseButton = (ImageButton)rootView.findViewById(R.id.pause_adventure_button);
+		pauseButton.setOnClickListener(this);
+		pauseButton.setColorFilter(Color.argb(seekBarMax, 0,0,0));
+		pauseButton.setEnabled(false); // until we are unlocked we are disabled
 		
 		// set the on click listener for the stop button
 		final ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button); 
@@ -95,9 +100,11 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				stopButton.setColorFilter(Color.argb(seekBarMax - progress,0,0,0));
+				pauseButton.setColorFilter(Color.argb(seekBarMax - progress,0,0,0));
 				if (progress == seekBarMax)
 				{
 					stopButton.setEnabled(true);
+					pauseButton.setEnabled(true);
 					unlockBar.setVisibility(SeekBar.INVISIBLE);
 				}
 				else
@@ -168,6 +175,8 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			break;
 		case R.id.stop_adventure_button:
 			stopAdventureButtonClicked(v);
+			break;
+		case R.id.pause_adventure_button:
 			break;
 		default:
 			Log.e("UI", "Spurrious button click");
@@ -254,12 +263,16 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		
 		final ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
 		final ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
-
+		final ImageButton pauseButton = (ImageButton)rootView.findViewById(R.id.pause_adventure_button);
+		
 		startButton.setVisibility(running ? Button.INVISIBLE : Button.VISIBLE);
 		startButton.setClickable(!running);
 		
 		stopButton.setVisibility(running ? Button.VISIBLE : Button.INVISIBLE);
 		stopButton.setClickable(running);
+		
+		pauseButton.setVisibility(running ? Button.VISIBLE : Button.INVISIBLE);
+		pauseButton.setClickable(running);
 		
 		final SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
 		
@@ -318,30 +331,42 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	public void orientationChange(Configuration newConfig) {
 
 		SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
-		ImageButton startButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
-		ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.stop_adventure_button);
+		ImageButton pauseButton = (ImageButton)rootView.findViewById(R.id.pause_adventure_button);
+		RelativeLayout.LayoutParams pauseParams = (RelativeLayout.LayoutParams )pauseButton.getLayoutParams();
+		
+		RelativeLayout infoLayout = (RelativeLayout)rootView.findViewById(R.id.info_layout);
+		RelativeLayout.LayoutParams infoParams = (RelativeLayout.LayoutParams)infoLayout.getLayoutParams();
+		
+		RelativeLayout buttonSliderLayout = (RelativeLayout)rootView.findViewById(R.id.button_slider_layout);
+		RelativeLayout.LayoutParams buttonSliderParams = (RelativeLayout.LayoutParams)buttonSliderLayout.getLayoutParams();
+		
+		RelativeLayout mainLayout = (RelativeLayout)rootView.findViewById(R.id.main_adv_layout);
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			unlockBar.setTranslationX(500);
-			unlockBar.setTranslationY(-120);
-			unlockBar.setRotation(90);
+			infoParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 			
-			startButton.setTranslationX(500);
-			startButton.setTranslationY(-120);
-
-			stopButton.setTranslationX(500);
-			stopButton.setTranslationY(-120);
+			pauseParams.addRule(RelativeLayout.RIGHT_OF, 0);
+			pauseParams.addRule(RelativeLayout.ABOVE, R.id.stop_adventure_button);
+		
+			buttonSliderParams.addRule(RelativeLayout.RIGHT_OF, R.id.info_layout);
+			buttonSliderParams.addRule(RelativeLayout.BELOW, 0);
+			unlockBar.setRotation(-90);
 		}
 		else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			unlockBar.setTranslationX(0);
-			unlockBar.setTranslationY(0);
+			infoParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+			pauseParams.addRule(RelativeLayout.RIGHT_OF, R.id.stop_adventure_button);
+			pauseParams.addRule(RelativeLayout.ABOVE, 0);
+	
+			buttonSliderParams.addRule(RelativeLayout.RIGHT_OF, 0);
+			buttonSliderParams.addRule(RelativeLayout.BELOW, R.id.info_layout);
 			unlockBar.setRotation(0);
-			
-			startButton.setTranslationX(0);
-			startButton.setTranslationY(0);
-
-			stopButton.setTranslationX(0);
-			stopButton.setTranslationY(0);
-		}	
+		}
+		
+		buttonSliderLayout.setLayoutParams(buttonSliderParams);
+		pauseButton.setLayoutParams(pauseParams);
+		
+		buttonSliderLayout.updateViewLayout(pauseButton, pauseParams);
+		mainLayout.updateViewLayout(buttonSliderLayout, buttonSliderParams);
+		rootView.invalidate();
 	}
 }
