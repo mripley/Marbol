@@ -27,7 +27,7 @@ public class ImperialConverter implements MarbolUnitConverter {
 		units.put("area_unit", "mi\u00b2");
 		units.put("distance_unit", "mi");
 		units.put("elevation_unit", "ft");
-		units.put("speed_unit", "ft/s");
+		units.put("speed_unit", "mph");
 		
 		return units;
 	}
