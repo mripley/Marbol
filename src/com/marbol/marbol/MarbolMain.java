@@ -1,5 +1,7 @@
 package com.marbol.marbol;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -31,11 +33,17 @@ public class MarbolMain extends FragmentActivity implements
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
+	private List<Fragment> fragmentList;
+	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
 
+	public MarbolMain(){
+		fragmentList = new ArrayList<Fragment>();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,6 +91,16 @@ public class MarbolMain extends FragmentActivity implements
 		return true;
 	}
 
+	@Override
+	public void onAttachFragment (Fragment fragment) {
+		
+		// if this fragment is a MarbolUIFragment then add it to the fragment list.
+		if (MarbolUIFragment.class.isAssignableFrom(fragment.getClass()))
+		{
+			fragmentList.add(fragment);	
+		}
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){		
 		switch(item.getItemId()){
@@ -171,7 +189,9 @@ public class MarbolMain extends FragmentActivity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
-	    Log.i("INFO", "Config changed!");
+	    for (Fragment f: fragmentList) {
+	    	((MarbolUIFragment)f).orientationChange(newConfig);
+	    }
 	}
 
 }

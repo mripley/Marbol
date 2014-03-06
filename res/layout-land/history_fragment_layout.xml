@@ -13,24 +13,22 @@
     
     <ListView
         android:id="@+id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/new_adventure_button" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/new_adventure_button"
         android:divider="#6e6e6e"
         android:dividerHeight="1dp">
     </ListView>
 
-    
     <ImageButton
         android:id="@+id/new_adventure_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/android:list"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/android:list"  
+        android:layout_alignParentRight="true"
         android:src="@drawable/new_adventure_button_sm"
         android:background="@android:color/transparent"
-        android:contentDescription="Start new adventure"
-        />
+        android:layout_centerInParent="true"
+        android:contentDescription="Start new adventure"/>
 
 </RelativeLayout>

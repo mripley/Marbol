@@ -177,12 +177,13 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			stopAdventureButtonClicked(v);
 			break;
 		case R.id.pause_adventure_button:
+			stopAdventureButtonClicked(v);
 			break;
 		default:
 			Log.e("UI", "Spurrious button click");
 		}
 	}
-	
+
 	private void stopAdventureButtonClicked(View v) {
 		running = false;
 		toggleUI(running);
