@@ -2,12 +2,15 @@ package com.marbol.marbol;
 
 import java.util.HashMap;
 
+import com.marbol.marbol.MarbolAdvNameDialog.MarbolAdvNameDialogHandler;
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +30,7 @@ import android.widget.TextView;
 /**
  * Fragment containing the logic to handle the "Map" Fragment
  */
-public class AdventureFragment extends Fragment implements View.OnClickListener, MarbolUIFragment{
+public class AdventureFragment extends Fragment implements View.OnClickListener, MarbolUIFragment, MarbolAdvNameDialogHandler{
 
 	private View rootView;
 	private Boolean running;
@@ -41,6 +44,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private SharedPreferences prefs;
 	private int converterType;
+	private String curAdventureName;
 	
 	public AdventureFragment() {
 		curAdventure = null;
@@ -51,6 +55,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		conv = new MetricConverter();
 		converterType = 0;
 		
+		curAdventureName = "New Adventure";
 		Log.i("Adventure", "Adventure Fragment created!");
 	}
 
@@ -93,10 +98,13 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		stopButton.setColorFilter(Color.argb(seekBarMax, 0,0,0));
 		stopButton.setEnabled(false); // until we are unlocked we are disabled
 		
+		final TextView adventureName = (TextView)rootView.findViewById(R.id.adventure_title);
+		adventureName.setOnClickListener(this);
+		
 		final SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
 		unlockBar.setMax(seekBarMax);
 		unlockBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
+		
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				stopButton.setColorFilter(Color.argb(seekBarMax - progress,0,0,0));
@@ -138,10 +146,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		super.onActivityCreated(savedInstanceState);
 		AdventureActivity activity = (AdventureActivity)this.getActivity();
 		this.curAdventure = activity.getCurAdventure();
-		
-		EditText text = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
-		text.setText(curAdventure.getAdvName());
-		
+		this.curAdventureName = curAdventure.getAdvName();
 		
 		if (!activity.isNewAdventure()){
 			firstRun = false;
@@ -154,7 +159,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			chrono.setBase(SystemClock.elapsedRealtime() - lastPause);
 			
 			ImageButton stopButton = (ImageButton)rootView.findViewById(R.id.start_adventure_button);
-			//stopButton.setText("Resume Adventure");
 			stopButton.setImageResource(R.drawable.new_adventure_button_sm);
 			stopButton.setVisibility(Button.VISIBLE);
 			
@@ -179,9 +183,16 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		case R.id.pause_adventure_button:
 			stopAdventureButtonClicked(v);
 			break;
+		case R.id.adventure_title:
+			setAdventureClicked(v);
 		default:
 			Log.e("UI", "Spurrious button click");
 		}
+	}
+
+	private void setAdventureClicked(View v) {	
+		DialogFragment dialog =  new MarbolAdvNameDialog(this);
+		dialog.show(this.getFragmentManager(), "Adventure Name");
 	}
 
 	private void stopAdventureButtonClicked(View v) {
@@ -194,18 +205,14 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	}
 
 	public void startAdventureButtonClicked(View v){
-		EditText advNameEdit = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
-		String newAdvName = advNameEdit.getText().toString();
-		
 		running = true;
-	
 		toggleUI(running);
 
 		curAdventure  = ((AdventureActivity)this.getActivity()).getCurAdventure();
-		curAdventure.setAdvName(newAdvName);
+		curAdventure.setAdvName(curAdventureName);
 		
 		TextView advTitle = (TextView)rootView.findViewById(R.id.adventure_title);
-		advTitle.setText(newAdvName);
+		advTitle.setText(curAdventureName);
 
 		if (firstRun)
 		{
@@ -236,6 +243,9 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			
 			Log.i("ERROR", "my data is null!");
 		}
+		
+		text = (TextView)rootView.findViewById(R.id.adventure_title);
+		text.setText(curAdventureName);
 		
 		text = (TextView)rootView.findViewById(R.id.area_view);
 		text.setText(String.format("%.1f" + units.get("area_unit"), data[0]));
@@ -293,14 +303,6 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			Log.i("CHRONO", "setting chronoBase to "+this.lastPause);
 			chrono.stop();
 		}
-
-		final EditText adventureEdit = (EditText)rootView.findViewById(R.id.AdventureNameEdit);
-		adventureEdit.setVisibility(running ? EditText.INVISIBLE : EditText.VISIBLE);
-		
-		// all the other labels
-		TextView text = (TextView)rootView.findViewById(R.id.adventure_title);
-		text.setText(adventureEdit.getText());
-		text.setVisibility(running ? TextView.VISIBLE : TextView.INVISIBLE);
 				
 		unlockBar.setVisibility(running ? SeekBar.VISIBLE : SeekBar.INVISIBLE);
 	}
@@ -369,5 +371,28 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		buttonSliderLayout.updateViewLayout(pauseButton, pauseParams);
 		mainLayout.updateViewLayout(buttonSliderLayout, buttonSliderParams);
 		rootView.invalidate();
+	}
+
+	@Override
+	public void onDialogOkClick(MarbolAdvNameDialog dialog) {
+		curAdventureName = dialog.getAdventureName();
+		
+		// while we are here update the view
+		TextView name = (TextView)rootView.findViewById(R.id.adventure_title);
+		name.setText(curAdventureName);
+		
+		curAdventure.setAdvName(curAdventureName);
+		
+		dSource.open();
+		dSource.updateAdventure(curAdventure);
+		dSource.close();
+		
+		Log.i("DIALOG", " OK got clicked!");
+	}
+
+	@Override
+	public void onDialogCancelClick(MarbolAdvNameDialog dialog) {
+		// basically a no op at this point
+		Log.i("DIALOG", " cancel got clicked!");
 	}
 }

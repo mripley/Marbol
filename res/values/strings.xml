@@ -18,5 +18,8 @@
     <string name="start_adv_desc">Start Adventure Button</string>
     <string name="stop_adv_desc">Stop Adventure Button</string>
     <string name="pause_btn_desc">Pause Button</string>
-
+    <string name="adventure_dialog_hint">Enter Adventure Name</string>
+    <string name="ok_string">Ok</string>
+    <string name="cancel_string">Cancel</string>
+    <string name="default_adventure_title">New Adventure</string>
 </resources>

@@ -25,8 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class AdventureActivity extends FragmentActivity implements
-		ActionBar.TabListener {
+public class AdventureActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	private AdventureDataSource dSource;
 	private SharedPreferences prefs;

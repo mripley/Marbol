@@ -115,46 +115,4 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 		// before we go jumping to the new activity close the DB as we have nothing left to write.
 		dSource.close();
 	}
-	
-//	@Override
-//	public void orientationChange(Configuration newConfig) {
-//		
-//		RelativeLayout rootHistoryLayout = (RelativeLayout)rootView.findViewById(R.id.historyRootLayout);
-//		
-//		RelativeLayout.LayoutParams buttonParams = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.new_adventure_button).getLayoutParams();
-//		RelativeLayout.LayoutParams listParams = (RelativeLayout.LayoutParams) rootView.findViewById(android.R.id.list).getLayoutParams();
-//		
-//		ListView listView = (ListView)rootView.findViewById(android.R.id.list);
-//		ImageButton newAdventureButton = (ImageButton)rootView.findViewById(R.id.new_adventure_button);
-//		
-//		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//			listParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//			buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//		}
-//		else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//			// undo the landscape rules			
-//			listParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
-//			buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);	
-//		}
-//		
-//		listView.setLayoutParams(listParams);
-//		newAdventureButton.setLayoutParams(buttonParams);
-//		
-//		rootHistoryLayout.updateViewLayout(listView, listParams);
-//		rootHistoryLayout.updateViewLayout(newAdventureButton, buttonParams);
-//		
-//		String listParamString = listParams.debug(getTag());
-//		String buttonParamString = buttonParams.debug(getTag());
-//		
-//		Log.i("AL:KJFLDS", "list Params: " + listParamString);
-//		Log.i("AL:KJFLDS", "button params: " + buttonParamString);
-//		
-//		rootView.invalidate();
-//	}
-
-//	@Override
-//	public void updateAdventure(Adventure adv) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 }

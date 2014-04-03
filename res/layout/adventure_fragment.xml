@@ -22,32 +22,17 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#FFFFFF"
-            android:visibility="invisible"
-            android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:id="@+id/AdventureNameEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:clickable="true"
             android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF" >
-
-            <requestFocus
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-            />
-
-        </EditText>
+            android:text="@string/default_adventure_title" />
 
         <Chronometer
             android:id="@+id/timer_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/AdventureNameEdit"
+            android:layout_below="@id/adventure_title"
             android:textColor="#FFFFFF"
             android:textSize="48sp" />
 
