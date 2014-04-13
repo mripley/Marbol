@@ -26,6 +26,15 @@
             android:clickable="true"
             android:layout_centerHorizontal="true"
             android:text="@string/default_adventure_title" />
+        
+        <ImageView
+            android:id="@+id/edit_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/adventure_title"
+            android:layout_toRightOf="@+id/adventure_title"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/edit_button" />
 
         <Chronometer
             android:id="@+id/timer_clock"
@@ -151,6 +160,7 @@
                     android:visibility="visible" />
             </LinearLayout>
         </GridLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
