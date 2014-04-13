@@ -34,7 +34,8 @@
             android:layout_alignBottom="@+id/adventure_title"
             android:layout_toRightOf="@+id/adventure_title"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/edit_button" />
+            android:clickable="true"
+            android:src="@drawable/edit_button_standalone" />
 
         <Chronometer
             android:id="@+id/timer_clock"

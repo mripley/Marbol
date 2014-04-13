@@ -101,6 +101,9 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		final TextView adventureName = (TextView)rootView.findViewById(R.id.adventure_title);
 		adventureName.setOnClickListener(this);
 		
+		final ImageView editButton = (ImageView)rootView.findViewById(R.id.edit_image);
+		editButton.setOnClickListener(this);
+		
 		final SeekBar unlockBar = (SeekBar)rootView.findViewById(R.id.unlockSlider);
 		unlockBar.setMax(seekBarMax);
 		unlockBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
@@ -183,6 +186,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		case R.id.pause_adventure_button:
 			stopAdventureButtonClicked(v);
 			break;
+		case R.id.edit_image:
 		case R.id.adventure_title:
 			setAdventureClicked(v);
 		default:
