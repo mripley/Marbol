@@ -189,6 +189,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		case R.id.edit_image:
 		case R.id.adventure_title:
 			setAdventureClicked(v);
+			break;
 		default:
 			Log.e("UI", "Spurrious button click");
 		}

@@ -285,10 +285,17 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 			this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
 			timer.start();
 			running = true;
+			
+			//we are running so we should subscribe to location updates
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		}
 		else{
 			timer.cancel();
 			running = false;
+			
+			// we are pausing, lets stop requesting location updates to help save on battery and CPU power
+			// NOTE: this may effect location accuracy. we may need to change back in the future.
+			locationManager.removeUpdates(this.locationListener);
 		}
 		
 		// sync the current adventure with the database
@@ -304,7 +311,7 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	
 	// in the event that we can't get a location from the GPS or our location has changed loop over
 	// all location providers and try to provide a "best guess"
-	private Location findNearestLocation()
+	public Location findNearestLocation()
 	{
 		Location bestLocation = null;
 		List<String> providers = locationManager.getAllProviders();

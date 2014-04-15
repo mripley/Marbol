@@ -58,6 +58,10 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		{
 			updateAdventure(curAdventure);
 		}
+		
+		// grab the nearest location and update the map accordingly
+		Location startLocation = act.findNearestLocation();
+		map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(startLocation.getLatitude(), startLocation.getLongitude())));
 	}
 
 	@Override
@@ -78,7 +82,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		
 		Log.i("UPDATES", "Updating map to "+ lastLocation.getLatitude() +", "+ lastLocation.getLongitude());
 		map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())));
-		Log.i("UPDATES", "Going to draw " + locList.size() + " points");
+
 		// if we have more than 2 points draw a line
 		if (locList.size() > 2)
 		{
@@ -96,7 +100,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 			lineOptions.addAll(latLongList);
 			map.addPolyline(lineOptions);	
 		}
-		// put a marker at teh first location we've sampled
+		// put a marker at the first location we've sampled
 		map.addMarker(new MarkerOptions().position(firstLatLng).title("Start"));
 		
 		// dump a marker at our last position
