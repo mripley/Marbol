@@ -72,6 +72,7 @@ public class MarbolMapFragment extends Fragment implements MarbolUIFragment {
 		// nothing to do. bail out now.
 		if (locList == null || locList.size() == 0)
 		{
+			Log.i("UPDATE", " no locations!");
 			return;
 		}
 		

@@ -3,6 +3,7 @@ package com.marbol.marbol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -14,6 +15,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,9 +34,7 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	private AdventureDataSource dSource;
 	private SharedPreferences prefs;
 	private MarbolLocationListener locationListener;
-	private CountDownTimer timer;
 	private Adventure curAdventure;
-	private Location curLocation;
 	private int gpsPollTime;
 	private LocationManager locationManager;
 	private boolean newAdventure;
@@ -40,7 +42,11 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	private long curID; 
 	private final int numFragments = 2;
 	private boolean running = false;
+	private long chronoBase;
 	
+	private MarbolWorkerThread workerThread;
+	private Timer marbolTimer;
+
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
@@ -51,6 +57,8 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	public AdventureActivity(){
 		newAdventure = false;
 		fragmentList = new ArrayList<Fragment>();
+		marbolTimer = new Timer("MarbolTimer", true);
+		chronoBase = 0;
 	}
 	
 	public boolean isNewAdventure() {
@@ -108,11 +116,6 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-		
-		// register the location listener
-		locationListener = new MarbolLocationListener();
-		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 		// open the DB and got fetch our current adventure if we have one
 		dSource.open();
@@ -129,6 +132,8 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 				curAdventure = dSource.getAdventure((long)curID);
 				newAdventure = false;
 			}
+			
+			running =  savedInstanceState.getBoolean("com.marbol.marbol.isRunning", false);
 		}
 		else{
 			Log.i("INFO", "No saved instance state!");
@@ -137,42 +142,12 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 		}			
 		
 		dSource.close();
+		workerThread = new MarbolWorkerThread(this, dSource);
 		
-		// count down timer set to our gps poll time. 
-		timer = new CountDownTimer(gpsPollTime, 1000){
-			@Override 
-			public void onFinish(){
-				// go get the most up to date location
-				curLocation = locationListener.getLocation();
-				
-				// if the location is null try and use the cached location
-				if (curLocation == null) {
-					curLocation = findNearestLocation();
-					Log.i("WARNING", "Location is null attemping to used cached location ");
-				}
-				
-				if (curAdventure == null || curLocation == null){
-					Log.i("ERROR", "Cowardly refusing to update due to null cur adventure");
-					this.start();
-					return;
-				}
-				
-				Log.i("GPS", "Adding gpsPoint! Lat:"+curLocation.getLatitude()+" Long:"+ curLocation.getLongitude());
-				curAdventure.addGpsPoint(curLocation);
-				
-				updateAdventures();
-				this.start();
-			}
-
-			@Override
-			public void onTick(long milliUntilFinished) {
-				// TODO Auto-generated method stub
-			}	
-		};
-		
-		if (running){
-			timer.start();
-			
+		// only start us running if we were running before the activity was created
+		// i.e if we've had a orientation change and now need to keep running
+		if (running) {
+			setRunning(running);
 		}
 	}
 
@@ -180,13 +155,13 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		savedInstanceState.putLong("curAdvID", curID);
 		savedInstanceState.putBoolean("isRunning", running);
+		savedInstanceState.putLong("chronoBase", 0);
 	}
 	
 	@Override
 	public void onDestroy(){
+		workerThread.setRunning(false);
 		super.onDestroy();
-		// since we are going away stop requesting location updates
-		locationManager.removeUpdates(this.locationListener);
 	}
 	
 	@Override
@@ -280,22 +255,19 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	}
 
 	public void setRunning(boolean running) {
-		// start the countdown timer
+		
 		if (running){
 			this.gpsPollTime = Integer.parseInt(prefs.getString("gpsPollTime", "30")) * 1000;
-			timer.start();
-			running = true;
-			
 			//we are running so we should subscribe to location updates
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+			//locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+			workerThread.setRunning(true);
+			marbolTimer.schedule(workerThread, this.gpsPollTime, this.gpsPollTime);
+			running = true;
 		}
 		else{
-			timer.cancel();
+			marbolTimer.cancel();
 			running = false;
-			
-			// we are pausing, lets stop requesting location updates to help save on battery and CPU power
-			// NOTE: this may effect location accuracy. we may need to change back in the future.
-			locationManager.removeUpdates(this.locationListener);
+			workerThread.setRunning(false);
 		}
 		
 		// sync the current adventure with the database
@@ -308,14 +280,19 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 		}
 		
 	}
-	
+
 	// in the event that we can't get a location from the GPS or our location has changed loop over
 	// all location providers and try to provide a "best guess"
 	public Location findNearestLocation()
 	{
 		Location bestLocation = null;
-		List<String> providers = locationManager.getAllProviders();
+		// register the location listener
+		locationListener = new MarbolLocationListener();
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		
+		List<String> providers = locationManager.getAllProviders();
+
 		for (String provider : providers)
 		{
 			Location lastLocation = locationManager.getLastKnownLocation(provider);
@@ -331,12 +308,15 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 				bestLocation = lastLocation;
 			}
 		}
+		
+		locationManager.removeUpdates(this.locationListener);
 		return bestLocation;
 	}
 	
-	private void updateAdventures()
+	public void updateAdventures(Adventure updatedAdventure)
 	{
 		// NOTE the fragmentList should only ever contain MarbolUIFragments otherwise explosions happen
+		this.curAdventure = updatedAdventure;
 		for (Fragment f : fragmentList){
 			((MarbolUIFragment) f).updateAdventure(curAdventure);
 		}
@@ -363,5 +343,13 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 			return super.onOptionsItemSelected(item);
 		}
 		
+	}
+
+	public long getChronoBase() {
+		return chronoBase;
+	}
+	
+	public void setChronoBase(long newBase) {
+		chronoBase = newBase;
 	}
 }

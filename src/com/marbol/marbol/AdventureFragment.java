@@ -39,6 +39,7 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	
 	private Adventure curAdventure;
 	private AdventureDataSource dSource;
+	private AdventureActivity activity;
 	private final int seekBarMax = 255;
 	private MarbolUnitConverter conv;
 	
@@ -147,10 +148,10 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		AdventureActivity activity = (AdventureActivity)this.getActivity();
+		activity = (AdventureActivity)this.getActivity();
 		this.curAdventure = activity.getCurAdventure();
 		this.curAdventureName = curAdventure.getAdvName();
-		
+		this.lastPause = activity.getChronoBase();
 		if (!activity.isNewAdventure()){
 			firstRun = false;
 			Chronometer chrono = (Chronometer)rootView.findViewById(R.id.timer_clock);
@@ -207,6 +208,8 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		// got tell our activity that we are running
 		AdventureActivity activity = (AdventureActivity)this.getActivity();
 		activity.setRunning(false);
+		
+		
 	}
 
 	public void startAdventureButtonClicked(View v){
@@ -307,6 +310,8 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			curAdventure.setAdvTime(lastPause);
 			Log.i("CHRONO", "setting chronoBase to "+this.lastPause);
 			chrono.stop();
+			activity.setChronoBase(lastPause);
+			
 		}
 				
 		unlockBar.setVisibility(running ? SeekBar.VISIBLE : SeekBar.INVISIBLE);
