@@ -47,7 +47,7 @@
         <activity
             android:name="com.marbol.marbol.AdventureActivity"
             android:label="@string/adventure_activity_title"
-            android:configChanges="orientation|screenSize" android:parentActivityName="com.marbol.marbol.MarbolMain">
+            android:parentActivityName="com.marbol.marbol.MarbolMain">
         </activity>
         
         <meta-data

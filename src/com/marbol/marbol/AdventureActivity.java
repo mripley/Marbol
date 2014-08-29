@@ -39,7 +39,7 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	private LocationManager locationManager;
 	private boolean newAdventure;
 	private List<Fragment> fragmentList;
-	private long curID; 
+	private long curID;
 	private final int numFragments = 2;
 	private boolean running = false;
 	private long chronoBase;
@@ -72,8 +72,14 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 		setContentView(R.layout.activity_adventure);
 		
 		Log.i("INFO", "Adventure Activity on create called");
+		
+		// if we don't have an explicit savedState then we should fetch it out of the extras.
+		if (savedInstanceState == null) {
+			savedInstanceState = getIntent().getExtras();
+		}
+		
 		if (savedInstanceState != null){
-			running = savedInstanceState.getBoolean("com.marbol.marbol.isRunning", false);
+			running = savedInstanceState.getBoolean("isRunning", false);
 		}
 		
 		dSource = new AdventureDataSource(this);
@@ -119,26 +125,32 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 
 		// open the DB and got fetch our current adventure if we have one
 		dSource.open();
-		savedInstanceState = getIntent().getExtras();
 		if (savedInstanceState != null){
-			curID = savedInstanceState.getLong("com.marbol.marbol.curAdventure", -1 );
+			curID = savedInstanceState.getLong("curAdventure", -1 );
 			if (curID == -1){
 				Log.i("INFO", "No current adventure provided.");
 				curAdventure = new Adventure();
 				newAdventure = true;
+				curAdventure = dSource.addAdventure(curAdventure);
+				curID = curAdventure.getAdvID();
+				Log.i("DB", "Adding adventure with ID " + curAdventure.getAdvID());
 			}
 			else{
 				Log.i("INFO", "Loading adventure: " + (long)curID);
 				curAdventure = dSource.getAdventure((long)curID);
 				newAdventure = false;
+				chronoBase = curAdventure.getAdvTime();
 			}
 			
-			running =  savedInstanceState.getBoolean("com.marbol.marbol.isRunning", false);
+			running =  savedInstanceState.getBoolean("isRunning", false);
 		}
 		else{
 			Log.i("INFO", "No saved instance state!");
 			curAdventure = new Adventure();
 			newAdventure = true;
+			curAdventure = dSource.addAdventure(curAdventure);
+			curID = curAdventure.getAdvID();
+			Log.i("DB", "Adding adventure with ID " + curAdventure.getAdvID());
 		}			
 		
 		dSource.close();
@@ -153,10 +165,12 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
-		savedInstanceState.putLong("curAdvID", curID);
+		Log.i("INFO", "SAVING INSTANCE STATE " + curID);
+		savedInstanceState.putLong("curAdventure", curID);
 		savedInstanceState.putBoolean("isRunning", running);
-		savedInstanceState.putLong("chronoBase", 0);
+		savedInstanceState.putLong("chronoBase", chronoBase);
 	}
+	
 	
 	@Override
 	public void onDestroy(){
@@ -351,5 +365,8 @@ public class AdventureActivity extends FragmentActivity implements ActionBar.Tab
 	
 	public void setChronoBase(long newBase) {
 		chronoBase = newBase;
+	}
+	public boolean getRunning() {
+		return this.running;
 	}
 }

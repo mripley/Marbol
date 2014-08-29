@@ -46,7 +46,6 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
                 new String[] { "adventure_name", "adventure_dist", "adventure_area", "adventure_date" },
                 new int[] { R.id.adventure_name, R.id.adventure_distance, R.id.adventure_area, R.id.adventure_date}, 0);
 		
-		
 		dSource.open();
 		dbCursor= dSource.getAdventures();
 		dSource.close();
@@ -68,7 +67,8 @@ public class HistoryFragment extends ListFragment implements OnClickListener{
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
 				Adventure adv = (Adventure)AdventureDataSource.cursorToAdventure((Cursor)dbAdapter.getItem(position));
 				Intent launcher = new Intent(activity, AdventureActivity.class);
-				launcher.putExtra("com.marbol.marbol.curAdventure", adv.getAdvID());
+				launcher.putExtra("curAdventure", adv.getAdvID());
+				Log.i("Launcher", "Launching activity with ID " + adv.getAdvID());
 				activity.startActivity(launcher);
 			}
 		});	

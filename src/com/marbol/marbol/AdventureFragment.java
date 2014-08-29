@@ -152,11 +152,13 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 		this.curAdventure = activity.getCurAdventure();
 		this.curAdventureName = curAdventure.getAdvName();
 		this.lastPause = activity.getChronoBase();
-		if (!activity.isNewAdventure()){
+		if (!activity.isNewAdventure()) {
+			Log.i("Adventure", "resuming an adventure");
 			firstRun = false;
 			Chronometer chrono = (Chronometer)rootView.findViewById(R.id.timer_clock);
 		
 			long seconds = convertToSeconds(curAdventure.getAdvTime());
+			Log.i("CLOCK", "Setting the clock to " + seconds);
 			chrono.setText("0:"+Long.toString(seconds));
 			lastPause = curAdventure.getAdvTime();
 			
@@ -168,12 +170,14 @@ public class AdventureFragment extends Fragment implements View.OnClickListener,
 			
 			updateUI(curAdventure);
 		}
-		else
-		{
+		else {
+			Log.i("Adventure", "Starting a new adventure");
 			firstRun = true;
 		}
 		
 		conv = getConverter();
+		Log.i("RUNNING", "Running status is " + activity.getRunning());
+		toggleUI(activity.getRunning());
 	}
 	
 	public void onClick(View v){		

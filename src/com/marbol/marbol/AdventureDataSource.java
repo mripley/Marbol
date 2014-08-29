@@ -110,7 +110,6 @@ public class AdventureDataSource {
 		java.text.DateFormat dateFormater = SimpleDateFormat.getDateInstance();
 		values.put(MarbolSQLHelper.ADVENTURE_DATE, dateFormater.format(adv.getAdvDate()));
 		values.put(MarbolSQLHelper.ADVENTURE_TIME, adv.getAdvTime());
-		
 		String points = new String();
 		if(adv.getGpsPoints().size() > 0){
 			// convert the array list of points into a single string to stuff into the DB 
@@ -129,7 +128,7 @@ public class AdventureDataSource {
 	}
 	
 	public static Adventure cursorToAdventure(Cursor c){
-		SimpleDateFormat formater =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formater = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
 		Date d;
 		Adventure retval = new Adventure();
 		retval.setAdvID(c.getLong(0));
@@ -140,6 +139,7 @@ public class AdventureDataSource {
 		} catch (ParseException e) {
 			d = new Date();
 			Log.e("SQL Stuff", "Unable to deserialize date from cursor");
+			Log.e("SQL Stuff", "Failed to deserialize string " + c.getString(2) );
 		}
 		retval.setAdvDate(d);
 		retval.setAdvArea(c.getDouble(3));
